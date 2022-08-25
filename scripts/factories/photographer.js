@@ -1,4 +1,4 @@
-function photographerFactory(data) {
+function photographerFactory(data) { // voir autres façons d'écrire des factory
     const { name, portrait } = data;
 
     const picture = `assets/photographers/${portrait}`;
