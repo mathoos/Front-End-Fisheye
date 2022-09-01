@@ -1,45 +1,28 @@
-    async function getPhotographers() {
-        // Penser à remplacer par les données récupérées dans le json
-        const photographers = [
-            {
-                "name": "Ma data test",
-                "id": 1,
-                "city": "Paris",
-                "country": "France",
-                "tagline": "Ceci est ma data test",
-                "price": 400,
-                "portrait": "account.png"
-            },
-            {
-                "name": "Autre data test",
-                "id": 2,
-                "city": "Londres",
-                "country": "UK",
-                "tagline": "Ceci est ma data test 2",
-                "price": 500,
-                "portrait": "account.png"
-            },
-        ]
-        // et bien retourner le tableau photographers seulement une fois
-        return ({
-            photographers: [...photographers, ...photographers, ...photographers]})
+async function fetchData(){
+    try{
+        var response = await fetch('data/photographers.json'); // Le await est une alternative à .then  (on ne peut l'utiliser que dans une function asynchrone)
+        console.log(response)  
+        var data = await response.json()
+        console.log(data)
+        data.photographers.forEach((photographer =>{
+            document.getElementById("photographer_section").innerHTML +=
+            `<article>
+                <a href="photographer.html?id=+${photographer.id}" alt="${photographer.name}" class="id">
+                    <img src="assets/photographers/${photographer.portrait}">
+                    <h2>${photographer.name}</h2>
+                </a>
+                <div>
+                    <p class="city">${photographer.city}, ${photographer.country}</p>
+                    <p class="tagline">${photographer.tagline}</p>
+                    <p class="price">${photographer.price}€/jour</p>
+                </div>
+            </article>`
+        }))
+        
     }
+    catch(e){
+        console.log(e)
+    }    
+}
 
-    async function displayData(photographers) {
-        const photographersSection = document.querySelector(".photographer_section");
-
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerFactory(photographer);
-            const userCardDOM = photographerModel.getUserCardDOM();
-            photographersSection.appendChild(userCardDOM);
-        });
-    };
-
-    async function init() {
-        // Récupère les datas des photographes
-        const { photographers } = await getPhotographers();
-        displayData(photographers);
-    };
-    
-    init();
-    
+fetchData()

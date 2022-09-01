@@ -2,7 +2,7 @@
     display: none;
 }
 
-.photograph-header {
+#photograph_header {
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
