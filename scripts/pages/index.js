@@ -7,7 +7,7 @@ async function fetchData(){
         data.photographers.forEach((photographer =>{
             document.getElementById("photographer_section").innerHTML +=
             `<article>
-                <a href="photographer.html?id=+${photographer.id}" alt="${photographer.name}" class="id">
+                <a href="photographer.html?id=${photographer.id}" alt="${photographer.name}" class="id">
                     <img src="assets/photographers/${photographer.portrait}">
                     <h2>${photographer.name}</h2>
                 </a>
