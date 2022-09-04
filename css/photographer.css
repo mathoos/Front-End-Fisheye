@@ -3,9 +3,51 @@
 }
 
 #photograph_header {
+    display : flex;
+    justify-content: space-between;
+    align-items : center;
     background-color: #FAFAFA;
     height: 300px;
-    margin: 0 100px;
+    margin: 50px 100px;
+    padding : 0 50px;
+}
+
+.photograph_header--bloc:nth-child(1){
+    display : flex;
+    flex-direction: column;
+    gap : 2vh;
+}
+
+.photograph_header--bloc h1{
+    font-size : 64px;
+    font-weight : 400;
+    color : #D3573C;
+    line-height: 1.2;
+    margin : 0;
+}
+
+.photograph_header--bloc p.city{
+    font-size : 24px; 
+    font-weight : 400; 
+    color : #901C1C;
+    line-height: 1.2;
+    margin : 0;
+}
+
+.photograph_header--bloc p.tagline{
+    font-size : 18px;
+    font-weight : 400;
+    color : #525252;
+    line-height: 1.2;
+    margin : 0;
+
+}
+
+.photograph_header--bloc img{
+    height: 200px;
+    width: 200px;
+    border-radius : 50%;
+    object-fit: cover;
 }
 
 .contact_button {
