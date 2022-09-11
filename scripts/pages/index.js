@@ -1,8 +1,9 @@
 async function fetchData(){
     try{
         var response = await fetch('data/photographers.json'); 
-        var data = await response.json()
-        data.photographers.forEach((photographer =>{
+        var data = await response.json();
+        var photographers = await data.photographers;
+        photographers.forEach((photographer =>{
             document.getElementById("photographer_section").innerHTML +=
             `<article>
                 <a href="photographer.html?id=${photographer.id}" alt="${photographer.name}">
@@ -15,7 +16,7 @@ async function fetchData(){
                     <p class="price">${photographer.price}€/jour</p>
                 </div>
             </article>`
-            console.log(data.photographers)
+            console.log(photographers)
         }))   
     }
     catch(e){

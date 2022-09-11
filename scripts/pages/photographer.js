@@ -8,9 +8,9 @@ async function fetchData(){
     try{
         var response = await fetch('data/photographers.json'); 
         var data = await response.json();
-        const photographers = await data.photographers;
-        const photographerFiltered = photographers.filter((photographer) => photographer.id == photographerId);
-        photographerFiltered.forEach((photographer) => {
+        var photographers = await data.photographers;
+        const photographerFilter = photographers.filter((photographer) => photographer.id == photographerId);
+        photographerFilter.forEach((photographer) => {
             document.getElementById("photograph_header").innerHTML +=
             `<div class="photograph_header--bloc">
                 <h1>${photographer.name}</h1>
@@ -25,7 +25,7 @@ async function fetchData(){
              </div>
             `
         }) 
-        return photographerFiltered
+        return photographerFilter
     }
     catch(e){
         console.log(e)
