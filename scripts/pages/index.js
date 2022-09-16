@@ -1,9 +1,4 @@
 class Api {
-    /**
-     * 
-     * @param {string} url 
-     */
-
     constructor(url) {
         this._url = url
     }
@@ -11,37 +6,65 @@ class Api {
     async get() {
         return fetch(this._url)
             .then(res => res.json())
-            .then(res => res.data)
+            .then(res => res.data)   
             .catch(err => console.log('an error occurs', err))
     }
 }
 
 
-class PhotographersApi extends Api {
-    /**
-     * 
-     * @param {string} url 
-     */
-
+class PhotographerApi extends Api {
     constructor(url) {
         super(url)
     }
 
-    async getPhotographers() {
-        return await this.get()
+    async getPhotographers(){
+        try{
+            var response = await fetch('data/photographers.json');    
+            var data = await response.json();
+            var photographers = await data.photographers;
+            console.log(photographers)
+            return photographers;       
+        }
+        catch(e){
+            console.log(e)
+        }    
     }
+
 }
 
 
 class Photographers{
     constructor(photographers){
         this.name = photographers.name
-        this.id =photographers.id
+        this.id = photographers.id
         this.city = photographers.city
         this.country = photographers.country
         this.tagline = photographers.tagline
         this.price = photographers.price
         this.portrait = photographers.portrait     
+    }
+    get name() {
+        return this.name
+    }
+
+    get id() {
+        return this.id
+    }
+
+    get city() {
+        return this.city
+    }
+
+    get country() {
+        return this.country
+    }
+
+    get tagline() {
+        return this.tagline
+    }
+
+    get price() {
+        return this.price
     }
     get portrait() {
         return `assets/photographers/${this.portrait}`
@@ -81,7 +104,7 @@ class photographersCard {
 class App {
     constructor() {
         this.photographersWrapper = document.querySelector('.photograph_header')
-        this.photographersApi = new PhotographersApi('data/photographers.json')
+        this.photographersApi = new PhotographerApi('data/photographers.json')
     }
 
     async main() {
@@ -92,7 +115,7 @@ class App {
         
         photographersData
             // Ici, je transforme mon tableau de données en un tableau de classe Movie
-            .map(data => new Photographers(data))
+            .map(photographers => new Photographers(photographers))
             .forEach(card => {
                 const Template = new photographersCard(card)
                 this.photographersWrapper.appendChild(
