@@ -1,20 +1,177 @@
-/*
-Obtenir l'id de l'url
+
+//Obtenir l'id de l'url
 const photographerUrl = window.location.search;
 const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get("id");
 
-
-async function getData(){
-    try{
-        await fetch('data/photographers.json');    
+class photographersHeader {
+    constructor(header) {
+        this.header = header
     }
-    catch(e){
-        console.log(e)
-    }    
+
+    createPhotographerHeader() {
+        const wrapper = document.createElement('div')
+        wrapper.classList.add('photographers_header')
+
+        const photographerHeader = 
+        `
+        <div class="photographers_header--bloc">
+            <h1>${this.header.name}</h1>
+            <p class="city">${this.header.city}, ${this.header.country}</p>
+            <p class="tagline">${this.header.tagline}</p>
+        </div>
+        <div class="photographers_header--bloc">
+            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        </div>  
+        <div class="photographers_header--bloc">
+            <img src="assets/photographers/${this.header.portrait}">
+        </div>
+        `
+        wrapper.innerHTML = photographerHeader
+        return wrapper
+    }
 }
 
-async function displayData() {
+
+class App {
+    constructor() {
+        this.photographersWrapper = document.querySelector('.photograph_header')
+    }
+
+    async main() {
+        try{
+            var response = await fetch('data/photographers.json');    
+            var data = await response.json();
+            const photographersData = await data.photographers;
+            const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
+            photographerFilter             
+                .forEach((header) => {
+                    const Template = new photographersHeader(header)
+                    this.photographersWrapper.appendChild(
+                    Template.createPhotographerHeader()
+                )
+            })    
+        }
+        catch(e){
+            console.log(e)
+        }   
+    }
+}
+
+const app = new App()
+app.main()
+
+
+
+
+
+
+// MEDIA
+
+class Media {
+    constructor(media) {
+        this.id = media.id
+        this.photographerId = media.photographerId
+        this.title = media.title
+        this.likes = media.likes
+        this.date = media.date
+        this.price = media.price
+    }  
+}
+
+class MediaWrapper {
+    constructor(mediaWrapper) {
+        this.mediaWrapper = mediaWrapper
+    }
+
+    createMediaWrapper() {
+        const wrapper = document.createElement('div')
+        wrapper.classList.add('media-wrapper')
+
+        const mediaWrapper = 
+        `
+        <div class="media-wrapper_up">     
+            <img src="assets/media/${this.mediaWrapper.image}">
+            <video src="assets/media/${this.mediaWrapper.video}"></video>          
+        </div>
+        <div class="media-wrapper_down">
+            <div class="media-wrapper_down--title">
+                <p>${this.mediaWrapper.title}</p>
+            </div>
+            <div class="media-wrapper_down--likes">
+                <p>${this.mediaWrapper.likes}</p>
+            </div>
+        </div>
+        `
+        
+        wrapper.innerHTML = mediaWrapper
+        return wrapper
+    }
+}
+
+
+class AppMedia {
+    constructor() {
+        this.MediasWrapper = document.querySelector('.medias')
+    }
+
+    async mainMedia() {
+        try{
+            var response = await fetch('data/photographers.json');    
+            var data = await response.json();
+            const mediasData = await data.media;
+            const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+            mediaFilter
+            .map((media) => MediaFactory.create(media))
+            .forEach((mediaWrapper) => {
+                const Template = new MediaWrapper(mediaWrapper)
+                    this.MediasWrapper.appendChild(
+                    Template.createMediaWrapper()
+
+                )
+            })       
+        }
+        catch(e){
+            console.log(e)
+        }   
+    }
+}
+
+const appMedia = new AppMedia()
+appMedia.mainMedia()
+
+
+class Video extends Media {
+    constructor(media) {
+        super(media) // appel du constructeur parent
+        this.video = media.video
+    }
+}
+
+class Image extends Media {   
+    constructor(media) {
+        super(media)
+        this.image = media.image
+    }
+}
+
+
+class MediaFactory {
+    static create(media) {
+        if (media.image) {
+            return new Image(media)
+        } else if (media.video) {
+            return new Video(media)
+        } else {
+            throw 'Unknown media'
+        }
+    }
+}
+
+
+
+
+/*async function displayData() {
     var response = await fetch('data/photographers.json'); 
     var data = await response.json();
     var photographers = await data.photographers;
@@ -35,92 +192,4 @@ async function displayData() {
         </div>
         `
     }) 
-}
-
-
-displayData()
-
-
-
-class Media {
-    constructor(media) {
-        this.id = media.id
-        this.title = media.title
-        this.likes = media.likes
-        this.date = media.date
-        this.price = media.price
-    }  
-}
-
-class Video extends Media {
-    constructor(media) {
-        super(media) // appel du constructeur parent
-        this.video = media.video
-    }
-
-    displayMedia() {
-        return `<div class="media">${this.video}</div>`
-    }
-}
-
-class Image extends Media {   
-    constructor(media) {
-        super(media)
-        this.image = media.image
-    }
-
-    displayMedia() { //contenu html
-        return `<div class="media">
-                    <img src="/assets/${photographerId}$">
-                </div>`
-                
-    }
-    
-}
-
-
-class MediaFactory {
-    static create(media) {
-        if (media.image) {
-            return new Image(media)
-        } else if (media.video) {
-            return new Video(media)
-        } else {
-            throw 'Unknown media'
-        }
-    }
-}
-
-async function playMedia(){
-
-    const response = await fetch('data/photographers.json')
-    var data = await response.json();
-    var medias = await data.media;
-    const mediaFilter = medias.filter((media) => media.photographerId == photographerId);
-    
-    mediaFilter.forEach((media) => {
-        document.getElementById("media").innerHTML +=
-        `<div>
-            <h1>${media.title}</h1>
-            <p>${media.likes}, ${media.price}€</p>
-            <img src="assets/media/Tracy Gallindo/${media.image}">
-        </div>
-        `
-      
-    }) 
-
-    /*const instanceMedia = medias.map((media) => MediaFactory.create(media))
-    instanceMedia.forEach((media) => {
-        document.getElementById("media").innerHTML +=
-        `<div>
-            <h1>${media.title}</h1>
-            <p>${media.likes}, ${media.price}€</p>
-        </div>
-        `
-        media.displayMedia()
-    }) */
-/*}
-
-
-playMedia()*/
-
+}*/

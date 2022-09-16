@@ -1,36 +1,34 @@
-class Api {
-    constructor(url) {
-        this._url = url
+
+class App {
+    constructor() {
+        this.photographersWrapper = document.querySelector('.photographers_wrapper')
     }
 
-    async get() {
-        return fetch(this._url)
-            .then(res => res.json())
-            .then(res => res.data)   
-            .catch(err => console.log('an error occurs', err))
-    }
-}
-
-
-class PhotographerApi extends Api {
-    constructor(url) {
-        super(url)
-    }
-
-    async getPhotographers(){
+    async main() {
         try{
             var response = await fetch('data/photographers.json');    
             var data = await response.json();
-            var photographers = await data.photographers;
-            console.log(photographers)
-            return photographers;       
+            const photographersData = await data.photographers
+            photographersData
+            // Ici, je transforme mon tableau de données en un tableau de classe Movie
+            .map(photographers => new Photographers(photographers))
+            .forEach(card => {
+                const Template = new photographersCard(card)
+                this.photographersWrapper.appendChild(
+                    Template.createPhotographerCard()
+                )
+            })           
         }
+
         catch(e){
             console.log(e)
-        }    
+        }   
     }
-
 }
+
+const app = new App()
+app.main()
+
 
 
 class Photographers{
@@ -43,34 +41,7 @@ class Photographers{
         this.price = photographers.price
         this.portrait = photographers.portrait     
     }
-    get name() {
-        return this.name
-    }
-
-    get id() {
-        return this.id
-    }
-
-    get city() {
-        return this.city
-    }
-
-    get country() {
-        return this.country
-    }
-
-    get tagline() {
-        return this.tagline
-    }
-
-    get price() {
-        return this.price
-    }
-    get portrait() {
-        return `assets/photographers/${this.portrait}`
-    }
 }
-
 
 
 class photographersCard {
@@ -79,11 +50,11 @@ class photographersCard {
     }
 
     createPhotographerCard() {
-        const wrapper = document.createElement('div')
+        const wrapper = document.createElement('article')
         wrapper.classList.add('photographer-card-wrapper')
 
         const photographerCard = 
-        `<article>
+        `
             <a href="photographer.html?id=${this.card.id}" alt="${this.card.name}">
                 <img src="assets/photographers/${this.card.portrait}">
                 <h2>${this.card.name}</h2>
@@ -93,40 +64,14 @@ class photographersCard {
                 <p class="tagline">${this.card.tagline}</p>
                 <p class="price">${this.card.price}€/jour</p>
             </div>
-        </article>`
-        
+        `
         wrapper.innerHTML = photographerCard
         return wrapper
     }
 }
 
 
-class App {
-    constructor() {
-        this.photographersWrapper = document.querySelector('.photograph_header')
-        this.photographersApi = new PhotographerApi('data/photographers.json')
-    }
 
-    async main() {
-        // Ici je récupère mes films de mon fichier old-movie-data.json
-        const photographersData = await this.photographersApi.getPhotographers()
-        console.log(photographersData)
-
-        
-        photographersData
-            // Ici, je transforme mon tableau de données en un tableau de classe Movie
-            .map(photographers => new Photographers(photographers))
-            .forEach(card => {
-                const Template = new photographersCard(card)
-                this.photographersWrapper.appendChild(
-                    Template.createPhotographerCard()
-                )
-            })
-    }
-}
-
-const app = new App()
-app.main()
 
 
 
