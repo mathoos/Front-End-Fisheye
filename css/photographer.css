@@ -103,10 +103,19 @@
     
 }
 .media-wrapper_down--likes{
+    display : flex;
+    gap : 2vw;
     
 }
 
-
+.likes{
+    position : fixed;
+    bottom : 0;
+    right : 0;
+    width : 20vh;
+    height : 10vh;
+    background-color: violet;
+}
 
 .contact_button {
     font-size: 20px;

@@ -4,6 +4,8 @@ const photographerUrl = window.location.search;
 const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get("id");
 
+
+
 class photographersHeader {
     constructor(header) {
         this.header = header
@@ -100,6 +102,7 @@ class MediaWrapper {
             </div>
             <div class="media-wrapper_down--likes">
                 <p>${this.mediaWrapper.likes}</p>
+                <p class="jaime">J'aime</p>
             </div>
         </div>
         `
@@ -129,7 +132,7 @@ class AppMedia {
                     Template.createMediaWrapper()
 
                 )
-            })       
+            })     
         }
         catch(e){
             console.log(e)
@@ -139,6 +142,48 @@ class AppMedia {
 
 const appMedia = new AppMedia()
 appMedia.mainMedia()
+
+
+
+
+class AppLikes {
+    constructor() {
+        this.LikesWrapper = document.querySelector('.likes')
+    }
+
+    async mainLikes() {
+        try{
+            var response = await fetch('data/photographers.json');    
+            var data = await response.json();
+            const mediasData = await data.media;
+            const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+
+            // TOTAL DE LIKES
+            var likes = mediaFilter.map(total => total.likes)   
+            likes.forEach((element) => {
+                console.log(element)
+            })
+
+
+            const initialValue = 0;
+            const sumWithInitial = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
+            console.log(sumWithInitial);
+            document.getElementById("likes").innerHTML +=
+                `<div class="photograph_header--bloc">
+                    <h1>${sumWithInitial}</h1>
+                </div>
+                ` 
+        }
+        catch(e){
+            console.log(e)
+        }   
+    }
+}
+
+const appLikes = new AppLikes()
+appLikes.mainLikes()
+
+
 
 
 class Video extends Media {
