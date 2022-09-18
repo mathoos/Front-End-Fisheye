@@ -132,7 +132,10 @@ class AppMedia {
                     Template.createMediaWrapper()
 
                 )
-            })     
+            })  
+            
+            // INCREMENTATION LIKES
+            
         }
         catch(e){
             console.log(e)
@@ -159,20 +162,50 @@ class AppLikes {
             const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
 
             // TOTAL DE LIKES
-            var likes = mediaFilter.map(total => total.likes)   
-            likes.forEach((element) => {
-                console.log(element)
-            })
-
-
+            var likes = mediaFilter.map(total => total.likes)  
             const initialValue = 0;
             const sumWithInitial = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
-            console.log(sumWithInitial);
             document.getElementById("likes").innerHTML +=
-                `<div class="photograph_header--bloc">
-                    <h1>${sumWithInitial}</h1>
-                </div>
-                ` 
+                `<h1 id="total-likes">${sumWithInitial}</h1>` 
+
+                var jaime = document.querySelectorAll(".jaime")
+                jaime.forEach((jaime) => {
+                    jaime.addEventListener("click", () =>{
+                        jaime.classList.toggle("red");
+                        
+                    })
+                })
+
+                // INCREMENTE NOMBRE DE LIKES AU CLICK
+
+                let totalOfLikes = parseInt(document.getElementById("total-likes").innerText);
+                console.log(totalOfLikes)
+                const likesArray = Array.from(document.querySelectorAll(".jaime"));
+                console.log(likesArray)
+                likesArray.forEach((element) => {
+                    let liked = false;
+                    element.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        if(!liked){
+                            element.previousElementSibling.innerText =
+                            parseInt(element.previousElementSibling.innerText) + 1;
+                            totalOfLikes += 1;
+                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                            liked = true;
+                        }
+                        else{
+                            element.previousElementSibling.innerText =
+                            parseInt(element.previousElementSibling.innerText) - 1;
+                            totalOfLikes -= 1;
+                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                            liked = false;
+                        }
+                    })
+                })
+                    
+
+
+
         }
         catch(e){
             console.log(e)

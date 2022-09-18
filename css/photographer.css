@@ -117,6 +117,9 @@
     background-color: violet;
 }
 
+.red{
+    color : red
+}
 .contact_button {
     font-size: 20px;
     font-weight: bold;
