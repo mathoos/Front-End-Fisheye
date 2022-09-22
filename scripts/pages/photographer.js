@@ -134,7 +134,10 @@ class AppMedia {
                 )
             })  
             
-            // INCREMENTATION LIKES
+
+            
+            
+            
             
         }
         catch(e){
@@ -202,8 +205,6 @@ class AppLikes {
                         }
                     })
                 })
-                    
-
 
 
         }
@@ -245,6 +246,9 @@ class MediaFactory {
         }
     }
 }
+
+
+
 
 
 
