@@ -29,6 +29,10 @@ class photographersHeader {
             <img src="assets/photographers/${this.header.portrait}">
         </div>
         `
+
+        document.getElementById("likes").innerHTML +=
+        `<p>${this.header.price}€/jour</p>` 
+
         wrapper.innerHTML = photographerHeader
         return wrapper
     }
@@ -62,9 +66,6 @@ class App {
 
 const app = new App()
 app.main()
-
-
-
 
 
 
@@ -124,21 +125,104 @@ class AppMedia {
             var data = await response.json();
             const mediasData = await data.media;
             const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+
+
+            // AFFICHER MEDIAS
             mediaFilter
             .map((media) => MediaFactory.create(media))
             .forEach((mediaWrapper) => {
                 const Template = new MediaWrapper(mediaWrapper)
                     this.MediasWrapper.appendChild(
                     Template.createMediaWrapper()
-
                 )
-            })  
-            
+            }) 
 
-            
-            
-            
-            
+            // TRIER PAR POPULARITE
+            const popularityButton = document.getElementById("popularityButton");
+            popularityButton.addEventListener("click", () => {
+                const mediaPopulaire = mediaFilter.sort(popularityFilter);
+                console.log(mediaPopulaire)
+                function popularityFilter(a, b) {
+                    if (a.likes > b.likes) {
+                    return -1;
+                    }
+                    if (a.likes < b.likes) {
+                    return 1;
+                    }
+                    return 0;
+                }
+                document.querySelector(".medias").innerHTML = "";
+                mediaPopulaire
+                .forEach((mediaWrapper) => {
+                    const Template = new MediaWrapper(mediaWrapper)
+                        this.MediasWrapper.appendChild(
+                        Template.createMediaWrapper()
+                    )
+                })               
+            });
+
+            // TRIER PAR TITRE
+            const titleButton = document.getElementById("titleButton");
+            titleButton.addEventListener("click", () => {
+                const mediaTitre = mediaFilter.sort(titleFilter); 
+                console.log(mediaTitre)
+                function titleFilter(a, b) {
+                    if (a.title < b.title) {
+                    return -1;
+                    }
+                    if (a.title > b.title) {
+                    return 1;
+                    }
+                    return 0;
+                }
+                document.querySelector(".medias").innerHTML = "";
+                mediaTitre
+                .forEach((mediaWrapper) => {
+                    const Template = new MediaWrapper(mediaWrapper)
+                        this.MediasWrapper.appendChild(
+                        Template.createMediaWrapper()
+                    )
+                })       
+            }) 
+
+
+            // AFFICHER LE TOTAL DE LIKES
+
+            function totalLikes(){
+                var likes = mediaFilter.map(total => total.likes)
+                const initialValue = 0;
+                const totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
+                document.getElementById("likes").innerHTML +=
+                `<h1 id="total-likes">${totalLikes}</h1>
+                ` 
+
+                // INCREMENTE NOMBRE DE LIKES AU CLICK
+                let totalOfLikes = parseInt(document.getElementById("total-likes").innerText);
+                console.log(totalOfLikes)
+                const likesArray = Array.from(document.querySelectorAll(".jaime")); // Créé un tableau de tous les <p class="jaime"></p>
+                console.log(likesArray)
+                likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
+                    let liked = false;
+                    jaime.addEventListener("click", () => {
+                        jaime.classList.toggle("red")
+                        if(!liked){
+                            jaime.previousElementSibling.innerText =
+                            parseInt(jaime.previousElementSibling.innerText) + 1;
+                            totalOfLikes += 1;
+                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                            liked = true;
+                        }
+                        else{
+                            jaime.previousElementSibling.innerText =
+                            parseInt(jaime.previousElementSibling.innerText) - 1;
+                            totalOfLikes -= 1;
+                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                            liked = false;
+                        }
+                    })
+                })
+            }
+            totalLikes()   
         }
         catch(e){
             console.log(e)
@@ -150,72 +234,6 @@ const appMedia = new AppMedia()
 appMedia.mainMedia()
 
 
-
-
-class AppLikes {
-    constructor() {
-        this.LikesWrapper = document.querySelector('.likes')
-    }
-
-    async mainLikes() {
-        try{
-            var response = await fetch('data/photographers.json');    
-            var data = await response.json();
-            const mediasData = await data.media;
-            const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-
-            // TOTAL DE LIKES
-            var likes = mediaFilter.map(total => total.likes)  
-            const initialValue = 0;
-            const sumWithInitial = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
-            document.getElementById("likes").innerHTML +=
-                `<h1 id="total-likes">${sumWithInitial}</h1>` 
-
-                var jaime = document.querySelectorAll(".jaime")
-                jaime.forEach((jaime) => {
-                    jaime.addEventListener("click", () =>{
-                        jaime.classList.toggle("red");
-                        
-                    })
-                })
-
-                // INCREMENTE NOMBRE DE LIKES AU CLICK
-
-                let totalOfLikes = parseInt(document.getElementById("total-likes").innerText);
-                console.log(totalOfLikes)
-                const likesArray = Array.from(document.querySelectorAll(".jaime"));
-                console.log(likesArray)
-                likesArray.forEach((element) => {
-                    let liked = false;
-                    element.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        if(!liked){
-                            element.previousElementSibling.innerText =
-                            parseInt(element.previousElementSibling.innerText) + 1;
-                            totalOfLikes += 1;
-                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
-                            liked = true;
-                        }
-                        else{
-                            element.previousElementSibling.innerText =
-                            parseInt(element.previousElementSibling.innerText) - 1;
-                            totalOfLikes -= 1;
-                            document.getElementById("total-likes").innerText = `${totalOfLikes}`;
-                            liked = false;
-                        }
-                    })
-                })
-
-
-        }
-        catch(e){
-            console.log(e)
-        }   
-    }
-}
-
-const appLikes = new AppLikes()
-appLikes.mainLikes()
 
 
 
@@ -248,6 +266,7 @@ class MediaFactory {
 }
 
 
+// FILTRE 
 
 
 
