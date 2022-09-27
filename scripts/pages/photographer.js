@@ -93,9 +93,7 @@ class MediaWrapper {
 
         const mediaWrapper = 
         `
-        <div class="media-wrapper_up">     
-            <img src="assets/media/${this.mediaWrapper.image}">
-            <video src="assets/media/${this.mediaWrapper.video}"></video>          
+        <div class="media-wrapper_up">              
         </div>
         <div class="media-wrapper_down">
             <div class="media-wrapper_down--title">
@@ -128,14 +126,16 @@ class AppMedia {
 
 
             // AFFICHER MEDIAS
-            mediaFilter
-            .map((media) => MediaFactory.create(media))
-            .forEach((mediaWrapper) => {
+                   
+            mediaFilter.forEach((mediaWrapper) => {               
                 const Template = new MediaWrapper(mediaWrapper)
                     this.MediasWrapper.appendChild(
                     Template.createMediaWrapper()
                 )
             }) 
+            const instanceMedia = mediaFilter.map((media) => MediaFactory.create(media))
+            instanceMedia.forEach((instance) => instance.displayIdentity())
+            
 
             // TRIER PAR POPULARITE
             const popularityButton = document.getElementById("popularityButton");
@@ -234,21 +234,59 @@ const appMedia = new AppMedia()
 appMedia.mainMedia()
 
 
-
-
-
-
 class Video extends Media {
     constructor(media) {
         super(media) // appel du constructeur parent
         this.video = media.video
     }
+    
+    displayIdentity(){
+
+        const wrapper = document.createElement('div')
+        wrapper.classList.add('media-wrapper_up')
+
+        const mediaWrapper = 
+        `<video src="assets/media/${this.video}"></video>`
+        
+        wrapper.innerHTML = mediaWrapper
+        console.log(mediaWrapper)
+        return wrapper
+
+        /*console.log(this.image)
+        const coucou = document.querySelectorAll(".media-wrapper_up")
+
+        coucou.forEach((coucou) => {
+            coucou.innerHTML +=
+            `<video src="assets/media/${this.video}"></video>`   
+        })*/
+    }
+    
 }
 
 class Image extends Media {   
     constructor(media) {
         super(media)
         this.image = media.image
+    }
+    displayIdentity(){
+
+        const wrapper = document.createElement('div')
+        wrapper.classList.add('media-wrapper_up')
+
+        const mediaWrapper = 
+       `<img src="assets/media/${this.image}">`
+        
+        wrapper.innerHTML = mediaWrapper
+        console.log(mediaWrapper)
+        return wrapper
+
+        /*console.log(this.image)
+        const coucou = document.querySelectorAll(".media-wrapper_up")
+
+        coucou.forEach((coucou) => {
+            coucou.innerHTML +=
+            `<img src="assets/media/${this.image}">`   
+        })*/
     }
 }
 
@@ -266,31 +304,96 @@ class MediaFactory {
 }
 
 
-// FILTRE 
+
+
+// LIGHTBOX 
+
+
+function displayLightbox(imageURL) {
+    const lightbox = document.getElementById("lightbox");
+    const imgExtension = imageURL.split(".").pop();
+
+
+    var imageContainer = document.querySelector(".image-container");
+    console.log(imageContainer)
+  
+    // display video or img, depending on image extension
+    if (imgExtension === "mp4") {
+      imageContainer.innerHTML = `<video id="image" src="${imageURL}" alt="${imageAlt} " class="image-lightbox" controls/>`;
+    } else {
+      imageContainer.innerHTML = `<img id="image" src="${imageURL}" alt="${imageAlt}" class="image-lightbox" />`;
+    }
+    const imageLightboxTitle = document.createElement("p");
+    imageLightboxTitle.classList.add("image-lightbox-title");
+    imageLightboxTitle.innerText = `${imageAlt}`;
+    imageContainer.appendChild(imageLightboxTitle);
+    lightbox.style.display = "block";
+  }
 
 
 
-
-
-/*async function displayData() {
-    var response = await fetch('data/photographers.json'); 
-    var data = await response.json();
-    var photographers = await data.photographers;
-    const photographerFilter = photographers.filter((photographer) => photographer.id == photographerId);
-    photographerFilter.forEach((photographer) => {
-        console.log(photographerFilter)
-        document.getElementById("photograph_header").innerHTML +=
-        `<div class="photograph_header--bloc">
-            <h1>${photographer.name}</h1>
-            <p class="city">${photographer.city}, ${photographer.country}</p>
-            <p class="tagline">${photographer.tagline}</p>
-            </div>
-            <div class="photograph_header--bloc">
-            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-            </div>  
-            <div class="photograph_header--bloc">
-            <img src="assets/photographers/${photographer.portrait}">
-        </div>
-        `
-    }) 
-}*/
+  function closeLightbox() {
+    const lightbox = document.getElementById("lightbox");
+    lightbox.style.display = "none";
+  }
+  
+  function nextImage() {
+    const images = Array.from(document.querySelectorAll(".sample-image"));
+    const gallery = images.map((image) => image.getAttribute("src"));
+    const currentImage = document.getElementById("image");
+  
+    let imgIndex = gallery.findIndex(
+      (img) => img === currentImage.getAttribute("src")
+    );
+    if (imgIndex === gallery.length - 1) {
+      imgIndex = -1;
+    }
+  
+    const nextImageAlt = images[imgIndex + 1]
+      .getAttribute("alt")
+      .split(",")
+      .slice(0, 1);
+  
+    displayLightbox(gallery[imgIndex + 1], nextImageAlt);
+  }
+  
+  function prevImage() {
+    const images = Array.from(document.querySelectorAll(".sample-image"));
+    const gallery = images.map((image) => image.getAttribute("src"));
+    const currentImage = document.getElementById("image");
+  
+    let imgIndex = gallery.findIndex(
+      (img) => img === currentImage.getAttribute("src")
+    );
+  
+    if (imgIndex === 0) {
+      const prevImageAlt = images[images.length - 1]
+        .getAttribute("alt")
+        .split(",")
+        .slice(0, 1);
+      displayLightbox(gallery[gallery.length - 1], prevImageAlt);
+    } else {
+      const prevImageAlt = images[imgIndex - 1]
+        .getAttribute("alt")
+        .split(",")
+        .slice(0, 1);
+      displayLightbox(gallery[imgIndex - 1], prevImageAlt);
+    }
+  }
+  
+  function globalLightboxListeners() {
+    // display lightbox on click
+    const images = Array.from(document.querySelectorAll(".sample-image"));
+    const imgLink = Array.from(document.querySelectorAll(".media-link"));
+  
+    images.forEach((image) =>
+      image.addEventListener("click", (e) => {
+        e.preventDefault();
+  
+        const imageURL = image.getAttribute("src");
+        const imageAlt = image.getAttribute("alt").split(",").slice(0, 1);
+  
+        displayLightbox(imageURL, imageAlt);
+      })
+    );
+    }  

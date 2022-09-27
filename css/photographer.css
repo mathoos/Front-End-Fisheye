@@ -116,6 +116,7 @@
     height : 100%;
     border-radius : 5px;
     overflow: hidden;
+    border : 2px solid violet;
 }
 .media-wrapper_up img{
     width : 100%;
@@ -226,4 +227,29 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+
+
+
+/* LIGHBOX */
+
+#lightbox{
+    display : none;
+    position : fixed;
+    top : 0;
+    left : 0;
+    display : flex;
+    justify-content : center;
+    align-items: center;
+    width : 100%;
+    height : 100vh;
+    background-color: rgba(255, 255, 255, 0.468);;
+}
+
+.image-container{
+    width : 50vw;
+    height : 25vw;
+    background-color: black;;
+    border : 1px solid black;
 }
