@@ -4,8 +4,7 @@ class Image extends Media {
         this.image = media.image
     }
 
-    displayMedia(){
-        
+    displayMedia(){      
         return `<img class="displayMedia" id="image" src="assets/media/${this.image}">`   
     }
 

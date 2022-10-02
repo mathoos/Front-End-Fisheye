@@ -272,20 +272,22 @@
     top : 50px;
     right : 50px;
 }
-.lightbox-container{
-    display : flex;
-    align-items : center;
-    width : fit-content;
-    gap : 5vw;
-    border : 2px solid violet;
+.lightbox-loader{
+    width : 50px;
+    height : 50px;
+    background-color: pink;
+    border-radius : 50%;
 }
 .image-container{
+    display : flex;
+    justify-content: center;
+    align-items: center;
     width : 54.6vw;
     height : 90vh;
     background-color: rgb(188, 178, 178);;
 }
 
-.image-container img{
+.image-container img, .image-container video{
     width : 100%;
     height : 100%;
     object-fit: contain;
