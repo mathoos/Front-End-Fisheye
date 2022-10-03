@@ -47,10 +47,10 @@ class photographersHeader {
             <p class="tagline">${this.header.tagline}</p>
         </div>
         <div class="photographers_header--bloc">
-            <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+            <button class="contact_button" alt="Contact Me" onclick="displayModal()">Contactez-moi</button>
         </div>  
         <div class="photographers_header--bloc">
-            <img src="assets/photographers/${this.header.portrait}">
+            <img src="assets/photographers/${this.header.portrait}" alt ="${this.header.name}">
         </div>
         `
 

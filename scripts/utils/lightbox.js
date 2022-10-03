@@ -1,5 +1,3 @@
-
-
 class lightbox{
     static async init(){
         let mediasData = await getMedias() 
