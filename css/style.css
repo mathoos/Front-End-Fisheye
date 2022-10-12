@@ -211,6 +211,9 @@ header h1 {
   border-radius: 5px 5px 0 0;
   background-color: #DB8876;
 }
+.likes_container {
+  background-color: red;
+}
 .likes_bloc {
   display: flex;
   align-items: center;

@@ -1,51 +1,18 @@
-class App {
-    constructor() {
-        this.photographersWrapper = document.querySelector('.photographers')
+async function getPhotographers() {
+    try {
+      const response = await fetch('data/photographers.json');
+      const data = await response.json();
+      const photographersData = await data.photographers;
+      return photographersData;
     }
-
-    async main() {
-        try{
-            var response = await fetch('data/photographers.json');    
-            var data = await response.json();
-            const photographersData = await data.photographers
-            photographersData
-            // Ici, je transforme mon tableau de données en un tableau de classe Movie
-            .map(photographers => new Photographers(photographers))
-            .forEach(card => {
-                const Template = new PhotographersCard(card)
-                this.photographersWrapper.appendChild(
-                    Template.createPhotographerCard()
-                )
-            })           
-        }
-
-        catch(e){
-            console.log(e)
-        }   
+    catch (e) {
+      console.log(e);
     }
 }
-
-const app = new App()
-app.main()
-
-
 
 class Photographers{
     constructor(photographers){
-        this.name = photographers.name
-        this.id = photographers.id
-        this.city = photographers.city
-        this.country = photographers.country
-        this.tagline = photographers.tagline
-        this.price = photographers.price
-        this.portrait = photographers.portrait     
-    }
-}
-
-
-class PhotographersCard {
-    constructor(card) {
-        this.card = card
+        this.photographers = photographers   
     }
 
     createPhotographerCard() {
@@ -54,14 +21,14 @@ class PhotographersCard {
 
         const photographerCard = 
         `
-            <a class="photographers_card-up" href="photographer.html?id=${this.card.id}" alt="${this.card.name}">
-                <img src="assets/photographers/${this.card.portrait}">
-                <h2>${this.card.name}</h2>
+            <a class="photographers_card-up" href="photographer.html?id=${this.photographers.id}" alt="${this.photographers.name}">
+                <img src="assets/photographers/${this.photographers.portrait}">
+                <h2>${this.photographers.name}</h2>
             </a>
             <div class="photographers_card-down">
-                <p class="city">${this.card.city}, ${this.card.country}</p>
-                <p class="tagline">${this.card.tagline}</p>
-                <p class="price">${this.card.price}€/jour</p>
+                <p class="city">${this.photographers.city}, ${this.photographers.country}</p>
+                <p class="tagline">${this.photographers.tagline}</p>
+                <p class="price">${this.photographers.price}€/jour</p>
             </div>
         `
         wrapper.innerHTML = photographerCard
@@ -69,4 +36,17 @@ class PhotographersCard {
     }
 }
 
+class PhotographersCards {
+    constructor() {
+        this.photographersWrapper = document.querySelector('.photographers')
+    }
 
+    async main() {
+        const photographersData = await getPhotographers();
+        photographersData.forEach((card) => {
+            this.photographersWrapper.appendChild(new Photographers(card).createPhotographerCard())
+        })  
+    }
+}
+
+new PhotographersCards().main()

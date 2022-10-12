@@ -28,9 +28,9 @@ async function getMedias() {
 }
 
 
-class PhotographersHeader {
-  constructor(header) {
-    this.header = header;
+class Photographers {
+  constructor(photographers) {
+    this.photographers = photographers;
   }
 
   createPhotographerHeader() {
@@ -40,57 +40,21 @@ class PhotographersHeader {
     const photographerHeader =
         `
         <div class="photographer_info">
-            <h1>${this.header.name}</h1>
-            <p class="city">${this.header.city}, ${this.header.country}</p>
-            <p class="tagline">${this.header.tagline}</p>
+            <h1>${this.photographers.name}</h1>
+            <p class="city">${this.photographers.city}, ${this.photographers.country}</p>
+            <p class="tagline">${this.photographers.tagline}</p>
         </div>
         <div class="photographer_contact">
             <button class="contact_button" alt="Contact Me" onclick="displayModal()">Contactez-moi</button>
         </div>  
         <div class="photographer_photo">
-            <img src="assets/photographers/${this.header.portrait}" alt ="${this.header.name}">
+            <img src="assets/photographers/${this.photographers.portrait}" alt ="${this.photographers.name}">
         </div>
-        `;
-
-    document.querySelector('.likes').innerHTML =
-        `<p class="likes_price">${this.header.price}€/jour</p>`;
+        `
 
     wrapper.innerHTML = photographerHeader;
     return wrapper;
   }
-}
-
-
-class App {
-  constructor() {
-    this.photographersWrapper = document.querySelector('.photographer_header');
-  }
-
-  async main() {
-    const photographersData = await getPhotographers();
-    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
-    photographerFilter
-        .forEach((header) => {
-          const Template = new PhotographersHeader(header);
-          this.photographersWrapper.appendChild(
-              Template.createPhotographerHeader(),
-          );
-        });
-  }
-}
-
-const app = new App();
-app.main();
-
-
-// MEDIA
-
-class Media {
-  constructor(mediaWrapper) {
-    this.mediaWrapper = mediaWrapper;
-    this.likes = mediaWrapper.likes;
-    this.title = mediaWrapper.title;
-    this.image = mediaWrapper.image;
   }
 
   createMediaWrapper() {
@@ -290,23 +254,4 @@ async function totalLikes() {
   const likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
   likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
     let liked = false;
-    jaime.addEventListener('click', () => {
-      if (!liked) {
-        jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) + 1;
-        totalOfLikes += 1;
-        document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-        liked = true;
-      } else {
-        jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) - 1;
-        totalOfLikes -= 1;
-        document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-        liked = false;
-      }
-    });
-  });
-}
-
-totalLikes();
 

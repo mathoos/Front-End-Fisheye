@@ -205,21 +205,8 @@ header h1 {
   padding: 0;
   margin: 0;
 }
-.medias_card-down--likes button.like {
-  position: relative;
-  border: 1px solid black;
-}
 .medias_card-down--likes button.like i {
   font-size: 1.5rem;
-}
-.medias_card-down--likes button.like i.invisible-heart {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.medias_card-down--likes button.like i.invisible-heart.visible {
-  display: block;
 }
 
 /* TOTAL LIKES */
