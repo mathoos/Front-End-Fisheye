@@ -1,14 +1,13 @@
-class lightbox{
+class Lightbox{
     static async init(){
         let mediasData = await getMedias() 
         mediasData = Array.from(document.querySelectorAll(".displayMedia")); // tableau de toutes les photos et vidéos d'un photographe
         let images = mediasData.map((image) => image.getAttribute("src")); // tableau du chemin exact de chaque media 
-        console.log(images)
 
         mediasData.forEach((link) => {
             link.addEventListener("click", (e) => {
                 e.preventDefault()
-                new lightbox(e.currentTarget.getAttribute("src"), images) // on récupère l'url du media
+                new Lightbox(e.currentTarget.getAttribute("src"), images) // on récupère l'url du media
             })
         })
     }
@@ -58,7 +57,7 @@ class lightbox{
     next(e){
         e.preventDefault()
         let i = this.images.findIndex(image => image === this.url) // on récupère l'index de l'image actuelle dans le tableau         
-        if(i === this.images.length - 1){ // pour revenir à la première image quand on a parcouri tout le tableau
+        if(i === this.images.length - 1){ // pour revenir à la première image quand on a parcouru tout le tableau
             i = -1
         }     
         this.loadImage(this.images[i + 1])
@@ -78,10 +77,16 @@ class lightbox{
         dom.classList.add("lightbox")
         dom.innerHTML = 
         `  
-            <button class="lightbox-prev">Prev</button>
+            <button class="lightbox-prev">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
             <div class="image-container"></div>
-            <button class="lightbox-next">Next</button>   
-            <button class="lightbox-close">Close</button>
+            <button class="lightbox-next">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button class="lightbox-close">
+                <i class="fa-sharp fa-solid fa-xmark"></i>
+            </button>
         `
         dom.querySelector(".lightbox-close").addEventListener("click", this.close.bind(this))
         dom.querySelector(".lightbox-next").addEventListener("click", this.next.bind(this))
@@ -91,7 +96,7 @@ class lightbox{
     }
 }
 
-lightbox.init()
+Lightbox.init()
 
 
 

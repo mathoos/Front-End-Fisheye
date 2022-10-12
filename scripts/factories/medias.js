@@ -2,10 +2,12 @@ class Image extends Media {
     constructor(media) {
         super(media)
         this.image = media.image
+        this.title = media.title
     }
 
-    displayMedia(){      
-        return `<img class="displayMedia" id="image" src="assets/media/${this.image}">`   
+    displayMedia(){  
+        console.log(this.title)  
+        return `<img alt="${this.title}" class="displayMedia" id="image" src="assets/media/${this.image}">`   
     }
 
 }
@@ -33,3 +35,4 @@ class MediaFactory {
         }
     }
 }
+

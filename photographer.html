@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/28a239a532.js" crossorigin="anonymous"></script>
     <title>Fisheye - photographe </title>
   </head>
   <body>
@@ -25,20 +26,22 @@
     
       <!-- FILTRE -->
 
-      <select class="photograph-sort">
-        <option value="popularite" id="popularityButton">Popularité</option>
-        <option value="date">Date</option>
-        <option value="titre" id="titleButton">Titre</option>
-      </select>
 
-      <!--<div class="photograph-sort">
-        <div id="popularityButton">Popularité</div>
-        <div id="titleButton">Titre</div>
-      </div>-->
+      <div class="photograph-sort">
+        <label class="select-label" for="sort-select">Trier par</label>
+        <select id="sort-select">
+          <option value="popularite" class="select-option" id="popularityButton">Popularité</option>
+          <option value="date" class="select-option" id="dateButton">Date</option>
+          <option value="titre" class="select-option" id="titleButton">Titre</option>
+        </select>
+      </div>
+
 
 
       <!-- MEDIAS -->
       <div class="medias"></div>
+
+
 
       <!--LIKES TOTAL -->
       <div class="likes" id="likes"></div>

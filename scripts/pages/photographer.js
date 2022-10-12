@@ -3,6 +3,9 @@ const photographerUrl = window.location.search;
 const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get("id");
 
+
+
+
 async function getPhotographers() {
     try{
         var response = await fetch('data/photographers.json');    
@@ -109,15 +112,14 @@ class MediaWrapper {
 
         const mediaWrapper = 
         `
-        <div class="media-wrapper_up">${this.media.displayMedia()}         
-        </div>
+        <div class="media-wrapper_up">${this.media.displayMedia()}</div>
         <div class="media-wrapper_down">
             <div class="media-wrapper_down--title">
                 <p>${this.media.title}</p>
             </div>
             <div class="media-wrapper_down--likes">
                 <p>${this.media.likes}</p>
-                <p class="jaime">J'aime</p>
+                <button class="jaime"><i class="fa-regular fa-heart"></i></button>
             </div>
         </div>
         `
@@ -142,64 +144,107 @@ class AppMedia {
         mediaFilter.forEach((mediaWrapper) => {               
             const template = new MediaWrapper(mediaWrapper)
                 this.MediasWrapper.appendChild(
-                template.createMediaWrapper()
-                
+                template.createMediaWrapper()              
             )
         })     
-
-        // TRIER PAR POPULARITE
-        const popularityButton = document.getElementById("popularityButton");
-        popularityButton.addEventListener("click", () => {
-            const mediaPopulaire = mediaFilter.sort(popularityFilter);
-            function popularityFilter(a, b) {
-                if (a.likes > b.likes) {
-                return -1;
-                }
-                if (a.likes < b.likes) {
-                return 1;
-                }
-                return 0;
-            }
-            document.querySelector(".medias").innerHTML = "";
-            mediaPopulaire
-            .forEach((mediaWrapper) => {
-                const Template = new MediaWrapper(mediaWrapper)
-                    this.MediasWrapper.appendChild(
-                    Template.createMediaWrapper()
-                )
-            })               
-        });
-
-        // TRIER PAR TITRE
-        const titleButton = document.getElementById("titleButton");
-        titleButton.addEventListener("click", () => {
-            const mediaTitre = mediaFilter.sort(titleFilter); 
-            console.log(mediaTitre)
-            function titleFilter(a, b) {
-                if (a.title < b.title) {
-                return -1;
-                }
-                if (a.title > b.title) {
-                return 1;
-                }
-                return 0;
-            }
-            document.querySelector(".medias").innerHTML = "";
-            mediaTitre
-            .forEach((mediaWrapper) => {
-                const Template = new MediaWrapper(mediaWrapper)
-                    this.MediasWrapper.appendChild(
-                    Template.createMediaWrapper()
-                )
-            })       
-        }) 
     }
 }
-
 const appMedia = new AppMedia()
 appMedia.mainMedia()
 
+class Sort{
+    constructor() {
+        this.MediasWrapper = document.querySelector('.medias')
+    }
+    async sort(){
 
+        const mediasData = await getMedias()
+        let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media))
+        const select = document.getElementById("sort-select");
+    
+        select.addEventListener("change", (e) => {
+            e.preventDefault()
+            let sortType = select.options[select.selectedIndex].id;
+    
+            // TRI PAR DATE
+            if(sortType === "dateButton"){
+                console.log("Tri par date")
+                mediaFilter.sort(dateFilter);          
+                document.querySelector(".medias").innerHTML = "";
+                mediaFilter
+                .forEach((mediaWrapper) => {
+                    const Template = new MediaWrapper(mediaWrapper)
+                        this.MediasWrapper.appendChild(
+                        Template.createMediaWrapper()
+                    )
+                })                             
+            }
+    
+            // TRI PAR POPULARITE
+            else if(sortType === "popularityButton"){
+                console.log("tri par popularité")
+                mediaFilter.sort(popularityFilter);
+                
+                document.querySelector(".medias").innerHTML = "";
+                mediaFilter
+                .forEach((mediaWrapper) => {
+                    const Template = new MediaWrapper(mediaWrapper)
+                        this.MediasWrapper.appendChild(
+                        Template.createMediaWrapper()
+                    )
+                })               
+            }
+    
+            // TRI PAR TITRE
+            else if(sortType === "titleButton"){
+                console.log("tri par titre")
+                mediaFilter.sort(titleFilter); 
+                
+                document.querySelector(".medias").innerHTML = "";
+                mediaFilter
+                .forEach((mediaWrapper) => {
+                    const Template = new MediaWrapper(mediaWrapper)
+                        this.MediasWrapper.appendChild(
+                        Template.createMediaWrapper()
+                    )
+                })       
+            }
+        })
+    }
+}
+
+const appSort = new Sort()
+appSort.sort()
+
+
+function dateFilter(a, b) {
+    if (a.date < b.date) {
+    return -1;
+    }
+    if (a.date > b.date) {
+    return 1;
+    }
+    return 0;
+}
+function popularityFilter(a, b) {
+    if (a.likes > b.likes) {
+    return -1;
+    }
+    if (a.likes < b.likes) {
+    return 1;
+    }
+    return 0;
+}
+function titleFilter(a, b) {
+    if (a.title < b.title) {
+    return -1;
+    }
+    if (a.title > b.title) {
+    return 1;
+    }
+    return 0;
+}
 // AFFICHER LE TOTAL DE LIKES
 
 async function totalLikes(){
@@ -211,7 +256,7 @@ async function totalLikes(){
     const initialValue = 0;
     const totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
     document.getElementById("likes").innerHTML +=
-    `<h1 id="total-likes">${totalLikes}</h1>
+    `<h1 id="total-likes">${totalLikes}<i class="fa-solid fa-heart"></i></h1>
     ` 
 
     // INCREMENTE NOMBRE DE LIKES AU CLICK
@@ -225,14 +270,14 @@ async function totalLikes(){
                 jaime.previousElementSibling.innerText =
                 parseInt(jaime.previousElementSibling.innerText) + 1;
                 totalOfLikes += 1;
-                document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                document.getElementById("total-likes").innerHTML = `${totalOfLikes}<i class="fa-solid fa-heart"></i>`;
                 liked = true;
             }
             else{
                 jaime.previousElementSibling.innerText =
                 parseInt(jaime.previousElementSibling.innerText) - 1;
                 totalOfLikes -= 1;
-                document.getElementById("total-likes").innerText = `${totalOfLikes}`;
+                document.getElementById("total-likes").innerHTML = `${totalOfLikes}<i class="fa-solid fa-heart"></i>`;
                 liked = false;
             }
         })

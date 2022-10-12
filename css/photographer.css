@@ -88,27 +88,21 @@
 
 
 .medias{
-    display : flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 30.2%);
     justify-content: space-between;
-
-    gap : 3vw;
+    grid-gap: 3vw;
     margin: 50px 100px;
     overflow : hidden;
 }
 
-.medias::after{  
-    content: "";
-    flex: auto;
-      
-}
 
 .media-wrapper{
     display : flex;
     flex-direction: column;
     gap : 1vh;
-    width : calc((100% / 3) - 3vw);
     height : 25vw;
+    border : 2px solid violet;
 }
 
 .media-wrapper_up{
@@ -117,6 +111,7 @@
     border-radius : 5px;
     overflow: hidden;
     cursor : pointer;
+    border : 1px solid blue;
 
 }
 .media-wrapper_up img{
@@ -137,18 +132,44 @@
     width : 100%;
 }
 .media-wrapper_down--title{
-    
+    display : flex;
+    height : fit-content;
+    border : 1px solid black;
+}
+.media-wrapper_down--title p{
+    font-size : 22px;
+    color : #901C1C;
+    font-weight : 500;
+    margin : 0;
 }
 .media-wrapper_down--likes{
     display : flex;
-    gap : 2vw;   
+    height : fit-content;
+    gap : 1vw;   
+    border : 1px solid black;
 }
-
+.media-wrapper_down--likes p{
+    font-size : 22px;
+    color : #901C1C;
+    font-weight : 500;
+    border : 1px solid black;
+    margin : 0;
+}
 .jaime{
+    padding : 0;
     cursor : pointer;
 }
 
+.fa-heart{
+    font-size : 1.5rem;
+    border : 1px solid pink;
+}
 
+#total-likes{
+    display : flex;
+    align-items : center;
+    gap : 1vw;
+}
 /* TOTAL LIKES */
 
 
@@ -259,9 +280,10 @@
     display : flex;
     justify-content : center;
     align-items: center;
+    gap : 2vw;
     width : 100%;
     height : 100vh;
-    background-color: rgba(255, 255, 255, 0.468);
+    background-color: white;
     transition : opacity .3s ease;
 }
 .lightbox.fadeOut{
@@ -269,22 +291,17 @@
 }
 .lightbox-close{
     position : absolute;
-    top : 50px;
+    top : 5vh;
     right : 50px;
+    font-size : 3rem;
 }
-.lightbox-loader{
-    width : 50px;
-    height : 50px;
-    background-color: pink;
-    border-radius : 50%;
-}
+
 .image-container{
     display : flex;
     justify-content: center;
     align-items: center;
-    width : 54.6vw;
+    width : 70vw;
     height : 90vh;
-    background-color: rgb(188, 178, 178);;
 }
 
 .image-container img, .image-container video{
@@ -294,8 +311,13 @@
 }
 
 button{
-    width : fit-content;
-    height : fit-content;
+    background-color: transparent;
+    outline : none;
+    border : none;
+}
+
+i{
+    font-size : 2.5rem;
+    color : #901C1C;
     cursor : pointer;
-    background-color: red;
 }
