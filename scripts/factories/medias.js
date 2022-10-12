@@ -119,8 +119,6 @@ class DisplayMedia {
     });
     } 
 
-    
-
     async sortMedia(){
         const mediasData = await getMedias();
       
@@ -166,22 +164,6 @@ class DisplayMedia {
 new DisplayMedia().mainMedia()
 new DisplayMedia().sortMedia()
 new DisplayMedia().mainTotalLikes()
-
-
-
-
-
-
-
-
-// AFFICHER LE TOTAL DE LIKES
-
-
-    
-
-    
-
-
 
 
 
