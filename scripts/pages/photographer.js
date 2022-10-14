@@ -69,6 +69,19 @@ class Photographers {
     wrapper.innerHTML = mediaWrapper;
     return wrapper;
   }
+
+  FormNamePhotographer(){
+    const wrapper = document.createElement('h2');
+    wrapper.classList.add('photographer-name');
+
+    const mediaWrapper =
+    `
+    <h2>${this.photographers.name}</h2>
+    `;
+
+    wrapper.innerHTML = mediaWrapper;
+    return wrapper;
+  }
 }
 
 
@@ -102,7 +115,23 @@ class WrapperBottom{
   }
 }
 
+class FormNamePhotographer{
+  constructor() {
+    this.namePhotographer = document.querySelector('.name');
+  }
+   async main() {
+    const photographersData = await getPhotographers();
+    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
+
+    photographerFilter.forEach((name) => {
+        this.namePhotographer.appendChild(new Photographers(name).FormNamePhotographer()
+        )
+    })
+  }
+}
+
 new PhotographerHeader().main()
 new WrapperBottom().main()
+new FormNamePhotographer().main()
 
 

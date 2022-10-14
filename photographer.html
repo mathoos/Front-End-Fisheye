@@ -22,10 +22,8 @@
 
       <!-- HEADER PHOTOGRAPHE -->
       <div class="photographer_header"></div>
-      
-    
+        
       <!-- FILTRE -->
-
 
       <div class="photograph-sort">
         <label class="select-label" for="sort-select">Trier par</label>
@@ -36,26 +34,21 @@
         </select>
       </div>
 
-
-
       <!-- MEDIAS -->
       <div class="medias"></div>
-
-
 
       <!--LIKES TOTAL -->
       <div class="likes"></div>
 
-
       <!-- FORM CONTACT -->
 
-      <div id="contact_modal">
-        <div class="modal">
-          <div class="top">
-            <h2>Contactez-moi</h2>
-            <span></span>
+      <div class="contact_modal" id="contact_modal">
+        <div class="contact_modal-container">
+          <div class="contact_modal-container--top">
+            <h2 class="name">Contactez-moi</h2>
             <img src="assets/icons/close.svg" onclick="closeModal()" />
           </div>
+
           <form action="index.html" method="get">
 
             <fieldset class="formData">
@@ -82,6 +75,7 @@
           </form>
         </div>
       </div>
+
     </main>
     
     <script src="/scripts/pages/photographer.js"></script>

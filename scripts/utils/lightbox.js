@@ -1,4 +1,44 @@
-class Lightbox{
+/*import {getMedias} from "../pages/photographer.js"
+export*/ class Lightbox{
+
+    constructor(url, images, media){
+        this.media = media
+        this.element = this.createLightboxWrapper(url)
+        this.loadImage(url)
+        document.body.appendChild(this.element)
+        this.images = images  
+        this.onKeyUp = this.onKeyUp.bind(this)  
+        document.addEventListener("keyup", this.onKeyUp)   
+    }
+
+    createLightboxWrapper(){    
+        const dom = document.createElement("div")
+        dom.classList.add("lightbox")
+        dom.setAttribute("aria-hidden", true)
+        dom.setAttribute("role", "dialog")
+        dom.setAttribute("aria-label", "modal")
+
+        dom.innerHTML = 
+        `  
+            <button class="lightbox-prev" role="Previous image">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="image-container"></div>
+            <button class="lightbox-next" role="Next image">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <button class="lightbox-close" role="Close dialog">
+                <i class="fa-sharp fa-solid fa-xmark"></i>
+            </button>
+        `
+        dom.querySelector(".lightbox-close").addEventListener("click", this.close.bind(this))
+        dom.querySelector(".lightbox-next").addEventListener("click", this.next.bind(this))
+        dom.querySelector(".lightbox-prev").addEventListener("click", this.prev.bind(this))
+        
+        return dom
+    }
+
+    
     static async init(){
         let mediasData = await getMedias() 
         mediasData = Array.from(document.querySelectorAll(".displayMedia")); // tableau de toutes les photos et vidéos d'un photographe
@@ -12,14 +52,9 @@ class Lightbox{
         })
     }
 
-    constructor(url, images){
-        this.element = this.buildDOM(url)
-        this.loadImage(url)
-        document.body.appendChild(this.element)
-        this.images = images  
-        this.onKeyUp = this.onKeyUp.bind(this)  
-        document.addEventListener("keyup", this.onKeyUp)   
-    }
+    // faire méthode init listener pour le forEach
+
+    
 
     loadImage(url){
         this.url = url
@@ -32,6 +67,8 @@ class Lightbox{
             container.innerHTML = `<img src="${url}"/>`;
         }
     }
+
+    
 
     onKeyUp(e){
         if(e.key === "Escape"){
@@ -72,28 +109,7 @@ class Lightbox{
         this.loadImage(this.images[i - 1])
     }
 
-    buildDOM(){    
-        const dom = document.createElement("div")
-        dom.classList.add("lightbox")
-        dom.innerHTML = 
-        `  
-            <button class="lightbox-prev">
-                <i class="fa-solid fa-chevron-left"></i>
-            </button>
-            <div class="image-container"></div>
-            <button class="lightbox-next">
-                <i class="fa-solid fa-chevron-right"></i>
-            </button>
-            <button class="lightbox-close">
-                <i class="fa-sharp fa-solid fa-xmark"></i>
-            </button>
-        `
-        dom.querySelector(".lightbox-close").addEventListener("click", this.close.bind(this))
-        dom.querySelector(".lightbox-next").addEventListener("click", this.next.bind(this))
-        dom.querySelector(".lightbox-prev").addEventListener("click", this.prev.bind(this))
-        
-        return dom
-    }
+    
 }
 
 Lightbox.init()

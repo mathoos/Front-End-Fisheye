@@ -11,7 +11,7 @@ class Media {
 
     const mediaWrapper =
         `
-        <div class="medias_card-up">${this.media.displayMedia()}</div>
+        <div class="medias_card-up">${this.displayMedia()}</div>
         <div class="medias_card-down">
             <div class="medias_card-down--title">
                 <p>${this.media.title}</p>
@@ -65,61 +65,25 @@ class MediaFactory {
     }
 }
 
+MediasWrapper = document.querySelector('.medias');
 
 class DisplayMedia {
     constructor() {
-        this.MediasWrapper = document.querySelector('.medias');
+        
     }
+    
 
-    async mainMedia() {
+    static async mainMedia() {
         const mediasData = await getMedias();
         let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
         mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
 
         mediaFilter.forEach((media) => {
-            this.MediasWrapper.appendChild(new Media(media).createMediaWrapper());
+            MediasWrapper.appendChild(media.createMediaWrapper());
         });
     } 
 
-    async mainTotalLikes() {
-        const mediasData = await getMedias();
-        const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-
-
-        const likes = mediaFilter.map((total) => total.likes);
-        const initialValue = 0;
-        const totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
-        document.querySelector('.likes').innerHTML +=
-        `<div class="likes_bloc">
-            <h1 class="likes_bloc-total">${totalLikes}</h1>
-            <i class="fa-solid fa-heart"></i>
-        </div>
-        `;
-
-        // INCREMENTE NOMBRE DE LIKES AU CLICK
-        let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
-        const likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
-        likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
-        let liked = false;
-        jaime.addEventListener('click', () => {
-            if (!liked) {
-            jaime.previousElementSibling.innerText =
-            parseInt(jaime.previousElementSibling.innerText) + 1;
-            totalOfLikes += 1;
-            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-            liked = true;
-            }else {
-            jaime.previousElementSibling.innerText =
-            parseInt(jaime.previousElementSibling.innerText) - 1;
-            totalOfLikes -= 1;
-            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-            liked = false;
-            }
-        });
-    });
-    } 
-
-    async sortMedia(){
+    static async sortMedia(){
         const mediasData = await getMedias();
       
         let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
@@ -130,13 +94,15 @@ class DisplayMedia {
         select.addEventListener('change', (e) => {
             e.preventDefault();
             const sortType = select.options[select.selectedIndex].id;
+            
     
             // TRI PAR DATE
             if (sortType === 'dateButton') {
                 mediaFilter.sort(dateFilter);
                 document.querySelector('.medias').innerHTML = '';
                 mediaFilter.forEach((media) => {
-                    this.MediasWrapper.appendChild(new Media(media).createMediaWrapper());
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()                   
                 });
             }
     
@@ -145,7 +111,8 @@ class DisplayMedia {
                 mediaFilter.sort(popularityFilter);
                 document.querySelector('.medias').innerHTML = '';
                 mediaFilter.forEach((media) => {
-                    this.MediasWrapper.appendChild(new Media(media).createMediaWrapper());
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()
                 });
             }
     
@@ -154,16 +121,60 @@ class DisplayMedia {
                 mediaFilter.sort(titleFilter);
                 document.querySelector('.medias').innerHTML = '';
                 mediaFilter.forEach((media) => {
-                    this.MediasWrapper.appendChild(new Media(media).createMediaWrapper());
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()
                 });
             }
         });
     }
+
+    static async mainTotalLikes() {
+        const mediasData = await getMedias();
+        const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+
+        // Tableau qui regroupe tous les likes
+        let likes = mediaFilter.map((total) => total.likes); 
+        const initialValue = 0;
+        let totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
+        document.querySelector('.likes').innerHTML +=
+        `<div class="likes_bloc">
+            <h1 class="likes_bloc-total">${totalLikes}</h1>
+            <i class="fa-solid fa-heart"></i>
+        </div>
+        `
+    
+        // INCREMENTE NOMBRE DE LIKES AU CLICK
+        let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
+        let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
+        likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
+            let liked = false;
+            jaime.addEventListener('click', () => {
+                jaime.classList.add("active")
+                if (!liked) {
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) + 1;
+                totalOfLikes += 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
+                liked = true;
+                }
+                else {
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) - 1;
+                totalOfLikes -= 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
+                liked = false;
+                }
+            });
+        });
+    }
+    
+ 
 }
 
-new DisplayMedia().mainMedia()
-new DisplayMedia().sortMedia()
-new DisplayMedia().mainTotalLikes()
+DisplayMedia.mainMedia()
+DisplayMedia.sortMedia()
+DisplayMedia.mainTotalLikes()
+
 
 
 
