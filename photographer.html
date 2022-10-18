@@ -25,14 +25,35 @@
         
       <!-- FILTRE -->
 
+
+
       <div class="photograph-sort">
         <label class="select-label" for="sort-select">Trier par</label>
-        <select id="sort-select">
-          <option value="popularite" class="select-option" id="popularityButton">Popularité</option>
-          <option value="date" class="select-option" id="dateButton">Date</option>
-          <option value="titre" class="select-option" id="titleButton">Titre</option>
-        </select>
+        <div class="select">
+          <select id="sort-select">       
+            <option value="popularite" class="select-option" id="popularityButton" selected>Popularité</option>
+            <option value="date" class="select-option" id="dateButton">Date</option>
+            <option value="titre" class="select-option" id="titleButton">Titre</option>
+          </select>
+        </div>
+        
       </div>
+
+
+      <!--<div class="photograph-sort">
+        <label>Trier par</label>
+
+        <div class="select">
+          <div class="select_button"></div>
+          <ul class="select_options">
+            <li id="popularityButton">Popularité</li>
+            <li id="dateButton">Date</li>
+            <li id="titleButton">Titre</li>
+          </ul>
+        </div>
+
+      </div>-->
+
 
       <!-- MEDIAS -->
       <div class="medias"></div>

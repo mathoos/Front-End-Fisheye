@@ -83,18 +83,85 @@ class DisplayMedia {
         });
     } 
 
+
+
     static async sortMedia(){
         const mediasData = await getMedias();
-      
         let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media));
+        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
+
+        /*let selectButton  = document.querySelector(".select_button")
+        let selectOptions  = document.querySelector(".select_options")
+        selectButton.addEventListener("click", () => {
+            selectOptions.classList.toggle("active")
+        })
+
+        const popularityButton = document.getElementById("popularityButton");
+        popularityButton.addEventListener("click", () => {
+            mediaFilter.sort(popularityFilter);
+            selectOptions.classList.toggle("active");
+            selectButton.innerText = popularityButton.innerText
+            popularityButton.classList.toggle("active")
+
+            document.querySelector('.medias').innerHTML = '';
+            mediaFilter.forEach((media) => {
+                MediasWrapper.appendChild(media.createMediaWrapper());
+                Lightbox.init()                   
+            });    
+        });
+
+        const titleButton = document.getElementById("titleButton");
+        titleButton.addEventListener("click", () => {
+            mediaFilter.sort(titleFilter); 
+            selectOptions.classList.toggle("active")
+            selectButton.innerText = titleButton.innerText
+           
+            document.querySelector('.medias').innerHTML = '';
+            mediaFilter.forEach((media) => {
+                MediasWrapper.appendChild(media.createMediaWrapper());
+                Lightbox.init()                   
+            });        
+        }) 
+
+        const dateButton = document.getElementById("dateButton");
+        dateButton.addEventListener("click", () => {
+            mediaFilter.sort(dateFilter); 
+            selectOptions.classList.toggle("active")
+            selectButton.innerText = dateButton.innerText
+           
+            document.querySelector('.medias').innerHTML = '';
+            mediaFilter.forEach((media) => {
+                MediasWrapper.appendChild(media.createMediaWrapper());
+                Lightbox.init()                   
+            });        
+        }) */
+
+
     
         const select = document.getElementById('sort-select');
+
+        select.addEventListener("click", (e) =>  {
+            e.preventDefault(e)
+            let selectedOption = select.options[select.selectedIndex]
+
+                if(selectedOption){                  
+                    selectedOption.style.display = "none"
+                }
+                else{
+                    selectedOption.style.display = "block"
+                }
+
+            
+
+
+        })
+        
+
+        
     
         select.addEventListener('change', (e) => {
             e.preventDefault();
             const sortType = select.options[select.selectedIndex].id;
-            
     
             // TRI PAR DATE
             if (sortType === 'dateButton') {
@@ -105,6 +172,8 @@ class DisplayMedia {
                     Lightbox.init()                   
                 });
             }
+
+            
     
             // TRI PAR POPULARITE
             else if (sortType === 'popularityButton') {

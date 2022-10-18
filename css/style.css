@@ -134,15 +134,27 @@ header h1 {
   gap: 5vw;
   padding: 4vh 100px;
 }
-.photograph-sort select {
-  position: relative;
-  background-color: rgb(144, 28, 28);
-  color: white;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: 700;
-  padding: 2vh 2vw;
-  padding-right: 5vw;
+.photograph-sort .select {
+  border: 2px solid pink;
+}
+.photograph-sort .select_button {
+  width: 15vw;
+  height: 5vh;
+  background-color: red;
+}
+.photograph-sort .select_options {
+  display: none;
+  background-color: orange;
+}
+.photograph-sort .select_options.active {
+  display: block;
+}
+.photograph-sort .select_options #popularityButton.active {
+  display: none;
+}
+
+select option .active {
+  background-color: pink;
 }
 
 /* MEDIAS */

@@ -173,20 +173,37 @@ header {
     gap : 5vw;
     padding : 4vh 100px;
     
+    .select{
+        border : 2px solid pink;
 
-    select{
-        position : relative;
-        background-color: rgba(144, 28, 28, 1);
-        color : white;
-        border-radius : 5px;
-        font-size : 18px;
-        font-weight : 700;
-        padding : 2vh 2vw;
-        padding-right : 5vw;
+        &_button{
+            width : 15vw;
+            height : 5vh;
+            background-color: red;
+        }
+
+        &_options{
+            display : none;
+            background-color: orange;
+            &.active{
+                display : block;
+            }
+            #popularityButton{
+                &.active{
+                    display : none
+                }
+            }
+        }
     }
 }
 
-
+select{
+    option{
+        .active{
+            background-color: pink;
+        }
+    }
+}
 /* MEDIAS */ 
 
 
@@ -468,3 +485,13 @@ i{
     color : #901C1C;
     cursor : pointer;
 }
+
+
+
+
+
+
+
+
+
+
