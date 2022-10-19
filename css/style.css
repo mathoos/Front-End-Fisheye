@@ -129,32 +129,128 @@ header h1 {
 }
 
 /* FILTRE */
-.photograph-sort {
-  display: flex;
-  gap: 5vw;
-  padding: 4vh 100px;
-}
-.photograph-sort .select {
-  border: 2px solid pink;
-}
-.photograph-sort .select_button {
-  width: 15vw;
-  height: 5vh;
-  background-color: red;
-}
-.photograph-sort .select_options {
-  display: none;
-  background-color: orange;
-}
-.photograph-sort .select_options.active {
-  display: block;
-}
-.photograph-sort .select_options #popularityButton.active {
-  display: none;
+/*.photograph-sort{
+    display : flex;
+    gap : 5vw;
+    padding : 4vh 100px;
+
+    .select{
+        border : 2px solid pink;
+
+        &_button{
+            width : 15vw;
+            height : 5vh;
+            background-color: red;
+        }
+
+        &_options{
+            display : none;
+            background-color: orange;
+            &.active{
+                display : block;
+            }
+            #popularityButton{
+                &.active{
+                    display : none
+                }
+            }
+        }
+    }
 }
 
-select option .active {
-  background-color: pink;
+select{
+    option{
+        .active{
+            background-color: pink;
+        }
+    }
+}*/
+.sorter {
+  position: absolute;
+  margin: 0 100px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  display: flex;
+  border: 1px solid black;
+}
+.sorter__desc {
+  padding-top: 20px;
+  margin-right: 25px;
+  float: left;
+}
+.sorter__selected {
+  font-family: "DM Sans", sans-serif;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  padding: 12px 20px;
+  height: 70px;
+  width: 170px;
+  position: relative;
+  text-align: left;
+}
+.sorter__selected::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-right: 4px solid white;
+  border-top: 4px solid white;
+  transform: rotate(135deg);
+  position: absolute;
+  top: calc(50% - 10px);
+  right: 26px;
+  z-index: 3;
+}
+.sorter__list {
+  display: none;
+  position: relative;
+  border-radius: 5px;
+  width: 170px;
+  background-color: purple;
+  z-index: 4;
+}
+.sorter__list::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-right: 4px solid white;
+  border-top: 4px solid white;
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 30px;
+  right: 26px;
+  z-index: 3;
+}
+.sorter__list li {
+  position: relative;
+  list-style-type: none;
+  height: 70px;
+}
+.sorter__list li button {
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: unset;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+  padding: 12px 20px;
+  text-align: left;
+}
+.sorter__list li + li::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 1px;
+  top: 0px;
+  left: 10px;
+  background-color: white;
+  z-index: 3;
 }
 
 /* MEDIAS */
@@ -165,6 +261,7 @@ select option .active {
   grid-gap: 3vw;
   padding: 5vh 100px;
   overflow: hidden;
+  margin-top: 50vh;
 }
 .medias_card {
   display: flex;

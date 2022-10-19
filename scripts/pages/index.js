@@ -3,12 +3,15 @@ async function getPhotographers() {
       const response = await fetch('data/photographers.json');
       const data = await response.json();
       const photographersData = await data.photographers;
+      console.log(photographersData)
       return photographersData;
+      
     }
     catch (e) {
       console.log(e);
     }
 }
+
 
 class Photographers{
     constructor(photographers){

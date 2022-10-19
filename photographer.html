@@ -26,8 +26,35 @@
       <!-- FILTRE -->
 
 
+      <section class="sorter">
+        <span id="sorterDesc" class="sorter__desc">Trier par</span>
+        <button
+          aria-expanded="false"
+          aria-controls="sorterList"
+          aria-labelledby="sorterDesc sorterBtn"
+          class="sorter__selected"
+          id="sorterBtn"
+        ></button>
+        <ul
+          id="sorterList"
+          role="listbox"
+          class="sorter__list"
+          aria-labelledby="sorterDesc"
+        >
+          <li>
+            <button role="option" id="like" name="sorter">Popularité</button>
+          </li>
+          <li>
+            <button role="option" id="date" name="sorter">Date</button>
+          </li>
+          <li>
+            <button role="option" id="title" name="sorter">Titre</button>
+          </li>
+        </ul>
+      </section>
 
-      <div class="photograph-sort">
+
+      <!--<div class="photograph-sort">
         <label class="select-label" for="sort-select">Trier par</label>
         <div class="select">
           <select id="sort-select">       
@@ -37,7 +64,7 @@
           </select>
         </div>
         
-      </div>
+      </div>-->
 
 
       <!--<div class="photograph-sort">
