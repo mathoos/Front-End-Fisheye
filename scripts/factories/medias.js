@@ -67,89 +67,48 @@ class MediaFactory {
 
 MediasWrapper = document.querySelector('.medias');
 
+
 class DisplayMedia {
     constructor() {
-        this.url = new URL(document.location);
     }
-    
 
     static async mainMedia() {
         const mediasData = await getMedias();
         let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
-
-        
+        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video  
 
         mediaFilter.forEach((media) => {
             MediasWrapper.appendChild(media.createMediaWrapper());
             
-        });
-
-        //let sorter = this.getSorterFromURL();
-        const sorting = new Sorter(mediaFilter);
-        sorting.displaySorter();
-        const params = this.url.searchParams;
-        console.log(params)
-
-
-        
+        }); 
     } 
 
+    static createSortList() {
 
-      
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('sort');
 
+        const mediaWrapper =
+            `
+            <div class="sort_section">
+                <label id="listboxlabel" role="label" for="selected" name="Order by">Trier par</label>
+            </div>
 
+            <div class="sort_list">
+                <button class="selected" id="selected" aria_labelledby="listboxlabel" aria-haspopup="listbox" aria-label="Populaire">
+                    Populaire
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="options hidden">  
+                    <button class="optDate" role="option" aria-label="Date">Date</button>
+                    <button class="optTitle" role="option" aria-label="Titre">Titre</button>
+                </div>
+            </div>
+            `;
 
-    /*static async sortMedia(){
-        const mediasData = await getMedias();
-        let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
-
-        
-    
-        const select = document.getElementById('sort-select');
-
-        select.addEventListener('change', (e) => {
-            e.preventDefault();
-            const sortType = select.options[select.selectedIndex].id;
-    
-            // TRI PAR DATE
-            if (sortType === 'dateButton') {
-                mediaFilter.sort(dateFilter);
-                document.querySelector('.medias').innerHTML = '';
-                mediaFilter.forEach((media) => {
-                    MediasWrapper.appendChild(media.createMediaWrapper());
-                    Lightbox.init()                   
-                });
-            }
-
-            
-    
-            // TRI PAR POPULARITE
-            else if (sortType === 'popularityButton') {
-                mediaFilter.sort(popularityFilter);
-                document.querySelector('.medias').innerHTML = '';
-                mediaFilter.forEach((media) => {
-                    MediasWrapper.appendChild(media.createMediaWrapper());
-                    Lightbox.init()
-                });
-            }
-    
-            // TRI PAR TITRE
-            else if (sortType === 'titleButton') {
-                mediaFilter.sort(titleFilter);
-                document.querySelector('.medias').innerHTML = '';
-                mediaFilter.forEach((media) => {
-                    MediasWrapper.appendChild(media.createMediaWrapper());
-                    Lightbox.init()
-                });
-            }
-        });
-    }*/
-
-
-    
-      
+        wrapper.innerHTML = mediaWrapper;
+        document.querySelector(".medias-sort").appendChild(wrapper)      
+    }
 
     static async mainTotalLikes() {
         const mediasData = await getMedias();
@@ -190,151 +149,58 @@ class DisplayMedia {
             });
         });
     }
-
-    
-    
- 
 }
 
 DisplayMedia.mainMedia()
-/*DisplayMedia.sortMedia()*/
 DisplayMedia.mainTotalLikes()
+DisplayMedia.createSortList()
 
 
 
 
 
 
-function dateFilter(a, b) {
-    if (a.media.date < b.media.date) {
-        return -1;
-    }
-    if (a.media.date > b.media.date) {
-        return 1;
-    }
-    return 0;
-}
+/*static async sortMedia(){
+        const mediasData = await getMedias();
+        let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+        mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
+    
+        const select = document.getElementById('sort-select');
 
-function popularityFilter(a, b) {
-    if (a.media.likes > b.media.likes) {
-        return -1;
-    }
-    if (a.media.likes < b.media.likes) {
-        return 1;
-    }
-    return 0;
-}
+        select.addEventListener('change', (e) => {
+            e.preventDefault();
+            const sortType = select.options[select.selectedIndex].id;
+    
+            // TRI PAR DATE
+            if (sortType === 'dateButton') {
+                mediaFilter.sort(dateFilter);
+                document.querySelector('.medias').innerHTML = '';
+                mediaFilter.forEach((media) => {
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()                   
+                });
+            }
 
-function titleFilter(a, b) {
-    if (a.media.title < b.media.title) {
-        return -1;
-    }
-    if (a.media.title > b.media.title) {
-        return 1;
-    }
-    return 0;
-}
-
-
-
-
-
-class Sorter {
-  // create a sorter
-  constructor(media, sorter) {
-    this.media = media;
-    this.sorter = sorter;
-    this.$sorterWrapper = document.getElementsByName('sorter');
-  }
-
-  // mediaSorted returns a object array based on the sorter value
-  mediaSorted() {
-    if (this.sorter === 'like') {
-      return Array.from(this.media).sort((a, b) => b.likes - a.likes);
-    }
-    if (this.sorter === 'date') {
-      return Array.from(this.media).sort(
-        (a, b) => new Date(b.date) - new Date(a.date),
-      );
-    }
-    if (this.sorter === 'title') {
-      return Array.from(this.media).sort((a, b) =>
-        a.title.localeCompare(b.title),
-      );
-    }
-    return null;
-  }
-
-  // getSorterName returns the name of the sort
-  getSorterName() {
-    let sorterText;
-
-    switch (this.sorter) {
-      case 'like':
-        sorterText = 'Popularité';
-        break;
-      case 'date':
-        sorterText = 'Date';
-        break;
-      case 'title':
-        sorterText = 'Titre';
-        break;
-      default:
-        sorterText = '';
-    }
-    return sorterText;
-  }
-
-  // loadButton the DOM of the sort
-  loadButton() {
-    const url = new URL(document.location);
-    const sorterName = this.getSorterName(this.sorter);
-    const btnSelectedSorter = document.querySelector('.sorter__selected');
-    const listSorter = document.querySelector('.sorter__list');
-
-    // load the name of the sort
-    btnSelectedSorter.innerText = sorterName;
-    listSorter.setAttribute('aria-activedescendant', this.sorter);
-
-    btnSelectedSorter.addEventListener('click', (e) => {
-      e.target.style.display = 'none'; // hide the button
-      e.target.setAttribute('aria-expanded', 'true');
-      listSorter.style.display = 'block'; // show the list of sort
-      document.getElementById('like').focus(); // focus the first elt of the list
-    });
-    this.$sorterWrapper.forEach((element) => {
-      // select the active sorter
-      if (element.id === this.sorter) {
-        element.setAttribute('aria-selected', 'true');
-      } else {
-        element.setAttribute('aria-selected', 'false');
-      }
-
-      // when sorter is selected, media are sorted
-      // change sorting's params url and refresh the DOM
-      element.addEventListener('click', (e) => {
-        this.sorter = e.target.id;
-        this.media = this.mediaSorted();
-
-        url.searchParams.set('sorting', this.sorter);
-        window.history.pushState({}, '', url);
-
-        // hide the list and show the button
-        listSorter.style.display = 'none';
-        btnSelectedSorter.style.display = 'block';
-        btnSelectedSorter.setAttribute('aria-expanded', 'false');
-        btnSelectedSorter.focus();
-
-        this.displaySorter();
-      });
-    });
-  }
-
-  // display sorter and gallery media sorted
-  displaySorter() {
-    this.loadButton();
-    DisplayMedia.mainMedia(this.mediaSorted());
-  }
-}
-
-
+            
+    
+            // TRI PAR POPULARITE
+            else if (sortType === 'popularityButton') {
+                mediaFilter.sort(popularityFilter);
+                document.querySelector('.medias').innerHTML = '';
+                mediaFilter.forEach((media) => {
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()
+                });
+            }
+    
+            // TRI PAR TITRE
+            else if (sortType === 'titleButton') {
+                mediaFilter.sort(titleFilter);
+                document.querySelector('.medias').innerHTML = '';
+                mediaFilter.forEach((media) => {
+                    MediasWrapper.appendChild(media.createMediaWrapper());
+                    Lightbox.init()
+                });
+            }
+        });
+    }*/

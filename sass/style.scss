@@ -207,96 +207,92 @@ select{
 
 
 
+.medias-sort{
+    padding : 5vh 100px;
+    width : 100%;
+    margin-bottom : 10vh;
+    background-color: pink;
 
-
-.sorter {
-    position: absolute;
-    margin: 0 100px;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 23px;
-    display: flex;
-    border : 1px solid black;
-
-    &__desc {
-      padding-top: 20px;
-      margin-right: 25px;
-      float: left;
-    }
-    &__selected {
-      font-family: 'DM Sans', sans-serif;
-      border-radius: 5px;
-      background-color: blue;
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 23px;
-      padding: 12px 20px;
-      height: 70px;
-      width: 170px;
-      position: relative;
-      text-align: left;
-      &::after {
-        content: '';
-        width: 10px;
-        height: 10px;
-        border-right: 4px solid white;
-        border-top: 4px solid white;
-        transform: rotate(135deg);
-        position: absolute;
-        top: calc(50% - 10px);
-        right: 26px;
-        z-index: 3;
-      }
-    }
-    &__list {
-      display: none;
-      position: relative;
-      border-radius: 5px;
-      width: 170px;
-      background-color: purple;
-      z-index: 4;
-      &::after {
-        content: '';
-        width: 10px;
-        height: 10px;
-        border-right: 4px solid white;
-        border-top: 4px solid white;
-        transform: rotate(-45deg);
-        position: absolute;
-        top: 30px;
-        right: 26px;
-        z-index: 3;
-      }
-      li {
-        position: relative;
-        list-style-type: none;
-        height: 70px;
-        button {
-          width: 100%;
-          height: 100%;
-          z-index: 99;
-          background-color: unset;
-          color: white;
-          font-size: 18px;
-          font-weight: 700;
-          line-height: 23px;
-          padding: 12px 20px;
-          text-align: left;
+    .sort{
+        display : flex;
+        gap : 5vw;
+        border : 1px solid black;
+          
+        &_section{
+            display : flex;
+            align-items : center;
+            border : 1px solid black;
         }
-        & + li::before {
-          content: '';
-          position: absolute;
-          width: 150px;
-          height: 1px;
-          top: 0px;
-          left: 10px;
-          background-color: white;
-          z-index: 3;
+    
+        &_list{
+            border : 1px solid rgb(178, 76, 76);
+
+            button {
+                display : flex;
+                gap : 2vw;
+                cursor: pointer;
+                background-color: orange;
+
+                &:hover, &:focus-visible {
+                    outline: none;
+                    background: rgb(115, 168, 168);
+                    transition: background ease .2s;
+                }
+                i{
+                    //position: absolute;
+                    font-size : 15px;
+                    transition: .3s ease-out;
+                }
+            }
+
+            .selected {
+                border-radius: 5px;
+            }
+            
+            .options {
+                margin-top: -4px;
+                display: flex;
+                flex-direction: column;
+                transform-origin: 50% 0%;
+                transition: .2s linear;
+        
+                :nth-child(1):after{
+                    content: " ";
+                    padding: 1px 70px;
+                    border-radius: 5px;
+                    background-color: white;
+                    position: absolute;
+                    top: 45px;
+                    right: 10px;
+                }
+                :nth-child(1):before{
+                    content: " ";
+                    padding: 1px 70px;
+                    border-radius: 5px;
+                    background-color: white;
+                    position: absolute;
+                    top: 95px;
+                    right: 10px;
+                }
+                :nth-child(2){
+                    border-radius: 0 0 5px 5px;
+                }
+            }
         }
-      }
+    
+        .chevron-up {
+            transform: rotate(-180deg);
+            transition: .3s ease-out;
+        }
+        .hidden {
+            transform: scaleY(0);
+            transition: .2s linear;
+        }
+    
+        
     }
-  }
+}
+
 
 
 
@@ -311,7 +307,6 @@ select{
     grid-gap: 3vw;
     padding: 5vh 100px;
     overflow : hidden;
-    margin-top : 50vh;
 
     &_card{
         display : flex;

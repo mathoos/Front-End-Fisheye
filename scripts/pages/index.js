@@ -1,21 +1,19 @@
-async function getPhotographers() {
-    try {
-      const response = await fetch('data/photographers.json');
-      const data = await response.json();
-      const photographersData = await data.photographers;
-      console.log(photographersData)
-      return photographersData;
-      
+async function getPhotographers(){
+    try{
+        const res = await fetch('data/photographers.json');
+        const ok = await res.json();
+        return ok;     
     }
     catch (e) {
-      console.log(e);
+        console.log(e);
     }
 }
 
 
-class Photographers{
-    constructor(photographers){
-        this.photographers = photographers   
+class PhotographerFactory {
+
+    constructor(photographers) {
+        this.photographers = photographers
     }
 
     createPhotographerCard() {
@@ -39,17 +37,18 @@ class Photographers{
     }
 }
 
-class PhotographersCards {
-    constructor() {
-        this.photographersWrapper = document.querySelector('.photographers')
-    }
 
-    async main() {
-        const photographersData = await getPhotographers();
-        photographersData.forEach((card) => {
-            this.photographersWrapper.appendChild(new Photographers(card).createPhotographerCard())
-        })  
-    }
+async function displayData(photographers) {
+    photographersWrapper = document.querySelector('.photographers')
+    photographers.forEach((photographer) => {
+        photographersWrapper.appendChild(new PhotographerFactory(photographer).createPhotographerCard())
+    }) 
 }
 
-new PhotographersCards().main()
+
+async function init() {
+    const res = await getPhotographers();
+    displayData(res.photographers);
+}
+
+init();
