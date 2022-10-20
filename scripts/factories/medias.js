@@ -18,7 +18,7 @@ class Media {
             </div>
             <div class="medias_card-down--likes">
                 <p>${this.media.likes}</p>
-                <button class="like">
+                <button class="like" data-id="${this.media.id}">
                     <i class="like far fa-heart"></i>
                 </button>
             </div>
@@ -69,8 +69,7 @@ MediasWrapper = document.querySelector('.medias');
 
 
 class DisplayMedia {
-    constructor(photographers) {
-        this.photographers = photographers;
+    constructor() {
     }
 
     static async mainMedia() {
@@ -79,8 +78,7 @@ class DisplayMedia {
         mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video  
 
         mediaFilter.forEach((media) => {
-            MediasWrapper.appendChild(media.createMediaWrapper());
-            
+            MediasWrapper.appendChild(media.createMediaWrapper());         
         }); 
     } 
 
@@ -109,37 +107,33 @@ class DisplayMedia {
         wrapper.innerHTML = mediaWrapper;
         document.querySelector(".medias-sort").appendChild(wrapper)      
     }   
-
 }
 
 
+
+
 async function mainTotalLikes() {
+
     const mediasData = await getMedias();
-    const photographersData = await getPhotographers();
     const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
-    console.log(mediaFilter)
 
     // Tableau qui regroupe tous les likes
     let likes = mediaFilter.map((total) => total.likes); 
     const initialValue = 0;
     let totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
-    document.querySelector('.likes').innerHTML +=
-    `<div class="likes_bloc">
-        <h1 class="likes-count likes_bloc-total">${totalLikes}</h1>
-        <i class="fa-solid fa-heart"></i>
-        <p>price</p>
-        <p class="likes_price">${this.price}€/jour</p>
-    </div>
-    `
-
+    document.querySelector('.likes_bloc-total').innerHTML = totalLikes
+    
+    
 
     // INCREMENTE NOMBRE DE LIKES AU CLICK
     let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
     let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
     likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
         let liked = false;
-        jaime.addEventListener('click', () => {
+        jaime.addEventListener('click', (e) => {
+            //const id = e.target.getAttribute('data-id')
+            //const mediaFound = mediaFilter.find((media) => media.id == id )
+            //mediaFound.likes +=1
             jaime.classList.toggle("fas")
             if (!liked) {
             jaime.previousElementSibling.innerText =
