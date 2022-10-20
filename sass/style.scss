@@ -168,115 +168,48 @@ header {
 
 /* FILTRE */
 
-/*.photograph-sort{
-    display : flex;
-    gap : 5vw;
-    padding : 4vh 100px;
-    
-    .select{
-        border : 2px solid pink;
-
-        &_button{
-            width : 15vw;
-            height : 5vh;
-            background-color: red;
-        }
-
-        &_options{
-            display : none;
-            background-color: orange;
-            &.active{
-                display : block;
-            }
-            #popularityButton{
-                &.active{
-                    display : none
-                }
-            }
-        }
-    }
-}
-
-select{
-    option{
-        .active{
-            background-color: pink;
-        }
-    }
-}*/ 
-
-
 
 .medias-sort{
     padding : 5vh 100px;
     width : 100%;
-    margin-bottom : 10vh;
-    background-color: pink;
 
     .sort{
         display : flex;
         gap : 5vw;
-        border : 1px solid black;
-          
-        &_section{
-            display : flex;
-            align-items : center;
-            border : 1px solid black;
-        }
     
         &_list{
-            border : 1px solid rgb(178, 76, 76);
+            width : 10vw;
+            color : white;
 
             button {
                 display : flex;
-                gap : 2vw;
+                justify-content: space-between;
                 cursor: pointer;
-                background-color: orange;
+                background-color: #901C1C;
 
                 &:hover, &:focus-visible {
                     outline: none;
-                    background: rgb(115, 168, 168);
-                    transition: background ease .2s;
+                    background-color: #DB8876; 
                 }
+
                 i{
-                    //position: absolute;
                     font-size : 15px;
+                    color : white;
                     transition: .3s ease-out;
                 }
             }
 
             .selected {
-                border-radius: 5px;
+                width : 100%;
+                color : white;
             }
             
             .options {
-                margin-top: -4px;
                 display: flex;
                 flex-direction: column;
                 transform-origin: 50% 0%;
+                color: white;
                 transition: .2s linear;
-        
-                :nth-child(1):after{
-                    content: " ";
-                    padding: 1px 70px;
-                    border-radius: 5px;
-                    background-color: white;
-                    position: absolute;
-                    top: 45px;
-                    right: 10px;
-                }
-                :nth-child(1):before{
-                    content: " ";
-                    padding: 1px 70px;
-                    border-radius: 5px;
-                    background-color: white;
-                    position: absolute;
-                    top: 95px;
-                    right: 10px;
-                }
-                :nth-child(2){
-                    border-radius: 0 0 5px 5px;
-                }
             }
         }
     
@@ -287,9 +220,7 @@ select{
         .hidden {
             transform: scaleY(0);
             transition: .2s linear;
-        }
-    
-        
+        }     
     }
 }
 
@@ -363,14 +294,9 @@ select{
                     padding : 0;
                     margin : 0;
 
-                    &.like{
-                        &.active{
-                            background-color: red;
-                        }
-                        i{
-                            font-size : 1.5rem;
-                        }                    
-                    }                
+                    i{
+                        font-size : 1.5rem;
+                    }               
                 }
             }
         }

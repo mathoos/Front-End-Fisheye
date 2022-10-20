@@ -129,106 +129,43 @@ header h1 {
 }
 
 /* FILTRE */
-/*.photograph-sort{
-    display : flex;
-    gap : 5vw;
-    padding : 4vh 100px;
-
-    .select{
-        border : 2px solid pink;
-
-        &_button{
-            width : 15vw;
-            height : 5vh;
-            background-color: red;
-        }
-
-        &_options{
-            display : none;
-            background-color: orange;
-            &.active{
-                display : block;
-            }
-            #popularityButton{
-                &.active{
-                    display : none
-                }
-            }
-        }
-    }
-}
-
-select{
-    option{
-        .active{
-            background-color: pink;
-        }
-    }
-}*/
 .medias-sort {
   padding: 5vh 100px;
   width: 100%;
-  margin-bottom: 10vh;
-  background-color: pink;
 }
 .medias-sort .sort {
   display: flex;
   gap: 5vw;
-  border: 1px solid black;
-}
-.medias-sort .sort_section {
-  display: flex;
-  align-items: center;
-  border: 1px solid black;
 }
 .medias-sort .sort_list {
-  border: 1px solid rgb(178, 76, 76);
+  width: 10vw;
+  color: white;
 }
 .medias-sort .sort_list button {
   display: flex;
-  gap: 2vw;
+  justify-content: space-between;
   cursor: pointer;
-  background-color: orange;
+  background-color: #901C1C;
 }
 .medias-sort .sort_list button:hover, .medias-sort .sort_list button:focus-visible {
   outline: none;
-  background: rgb(115, 168, 168);
-  transition: background ease 0.2s;
+  background-color: #DB8876;
 }
 .medias-sort .sort_list button i {
   font-size: 15px;
+  color: white;
   transition: 0.3s ease-out;
 }
 .medias-sort .sort_list .selected {
-  border-radius: 5px;
+  width: 100%;
+  color: white;
 }
 .medias-sort .sort_list .options {
-  margin-top: -4px;
   display: flex;
   flex-direction: column;
   transform-origin: 50% 0%;
+  color: white;
   transition: 0.2s linear;
-}
-.medias-sort .sort_list .options :nth-child(1):after {
-  content: " ";
-  padding: 1px 70px;
-  border-radius: 5px;
-  background-color: white;
-  position: absolute;
-  top: 45px;
-  right: 10px;
-}
-.medias-sort .sort_list .options :nth-child(1):before {
-  content: " ";
-  padding: 1px 70px;
-  border-radius: 5px;
-  background-color: white;
-  position: absolute;
-  top: 95px;
-  right: 10px;
-}
-.medias-sort .sort_list .options :nth-child(2) {
-  border-radius: 0 0 5px 5px;
 }
 .medias-sort .sort .chevron-up {
   transform: rotate(-180deg);
@@ -298,10 +235,7 @@ select{
   padding: 0;
   margin: 0;
 }
-.medias_card-down--likes button.like.active {
-  background-color: red;
-}
-.medias_card-down--likes button.like i {
+.medias_card-down--likes button i {
   font-size: 1.5rem;
 }
 
