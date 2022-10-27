@@ -245,8 +245,10 @@ header h1 {
 }
 .medias_card-down--likes {
   display: flex;
+  align-items: center;
   height: fit-content;
   gap: 0.5vw;
+  border: 1px solid red;
 }
 .medias_card-down--likes p {
   font-size: 20px;
@@ -254,7 +256,7 @@ header h1 {
   font-weight: 500;
   margin: 0;
 }
-.medias_card-down--likes button i {
+.medias_card-down--likes i {
   font-size: 1.5rem;
 }
 

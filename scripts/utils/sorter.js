@@ -21,9 +21,7 @@ async function sortList() {
                 document.querySelector('.medias').innerHTML = '';
                 mediaFilter.forEach((media) => {
                     MediasWrapper.appendChild(media.createMediaWrapper());                    
-                });
-                //document.querySelector('.likes').innerHTML = ''
-             
+                });          
             refreshSortList("date");
         });
     }
@@ -35,7 +33,6 @@ async function sortList() {
                 mediaFilter.forEach((media) => {
                     MediasWrapper.appendChild(media.createMediaWrapper());                
                 });
-                //document.querySelector('.likes_bloc-total').innerHTML = ''
             refreshSortList("title");
         });
     }
@@ -47,7 +44,6 @@ async function sortList() {
                 mediaFilter.forEach((media) => {
                     MediasWrapper.appendChild(media.createMediaWrapper());                        
                 });
-                //document.querySelector('.likes').innerHTML = ''
             refreshSortList("popular");
         });
     }
@@ -85,7 +81,6 @@ function refreshSortList(opt) {
     Lightbox.init()   
     sortList();
     mainTotalLikes()
-
 }
 
 function dateFilter(a, b) {

@@ -18,10 +18,8 @@ class Media {
                 <p>${this.media.title}</p>
             </div>
             <div class="medias_card-down--likes">
-                <p>${this.media.likes}</p>
-                <button class="like" data-id="${this.media.id}">
-                    <i class="far fa-heart"></i>
-                </button>
+                <p>${this.media.likes}</p>             
+                <i class="far fa-heart like" data-id="${this.media.id}"></i>   
             </div>
         </div>
         `;
@@ -117,7 +115,6 @@ async function mainTotalLikes() {
 
     const mediasData = await getMedias();
     const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-    console.log(mediaFilter)
 
     // Tableau qui regroupe tous les likes
     let likes = mediaFilter.map((total) => total.likes); 
@@ -133,9 +130,15 @@ async function mainTotalLikes() {
     likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
         let liked = false;
         jaime.addEventListener('click', (e) => {
-            //const id = e.target.getAttribute('data-id')
-            //const mediaFound = mediaFilter.find((media) => media.id == id )
-            //mediaFound.likes +=1
+            jaime.classList.toggle("fas")
+            const id = e.target.getAttribute('data-id')
+            console.log(id)
+            const mediaFound = mediaFilter.find((media) => media.id == id )
+            console.log(mediaFound)
+            mediaFound.likes +=1
+            mediaFound.likes
+            console.log(mediaFound.likes)
+
             if (!liked) {
             jaime.previousElementSibling.innerText =
             parseInt(jaime.previousElementSibling.innerText) + 1;
@@ -152,14 +155,6 @@ async function mainTotalLikes() {
             }
         });
     });
-
-    let heart = document.querySelectorAll('.far');
-    console.log(heart)
-    heart.forEach((h) => {
-        h.addEventListener("click", () => {
-            h.classList.toggle("fas")
-        })
-    })
 }
 
 
