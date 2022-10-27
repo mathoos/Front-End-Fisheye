@@ -12,6 +12,7 @@ async function sortList() {
     selectElement.addEventListener("click", () => {
         document.querySelector(".fa-chevron-down").classList.toggle("chevron-up");
         options.classList.toggle("hidden");
+        selectElement.classList.toggle("border")
     });
 
     if(optDate){

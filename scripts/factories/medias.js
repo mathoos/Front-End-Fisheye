@@ -3,6 +3,7 @@ class Media {
         this.media = media
         this.likes = media.likes;
         this.title = media.title;
+        this.id = media.id;
     }
 
     createMediaWrapper() {
@@ -19,7 +20,7 @@ class Media {
             <div class="medias_card-down--likes">
                 <p>${this.media.likes}</p>
                 <button class="like" data-id="${this.media.id}">
-                    <i class="like far fa-heart"></i>
+                    <i class="far fa-heart"></i>
                 </button>
             </div>
         </div>
@@ -116,6 +117,7 @@ async function mainTotalLikes() {
 
     const mediasData = await getMedias();
     const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+    console.log(mediaFilter)
 
     // Tableau qui regroupe tous les likes
     let likes = mediaFilter.map((total) => total.likes); 
@@ -134,7 +136,6 @@ async function mainTotalLikes() {
             //const id = e.target.getAttribute('data-id')
             //const mediaFound = mediaFilter.find((media) => media.id == id )
             //mediaFound.likes +=1
-            jaime.classList.toggle("fas")
             if (!liked) {
             jaime.previousElementSibling.innerText =
             parseInt(jaime.previousElementSibling.innerText) + 1;
@@ -151,11 +152,21 @@ async function mainTotalLikes() {
             }
         });
     });
+
+    let heart = document.querySelectorAll('.far');
+    console.log(heart)
+    heart.forEach((h) => {
+        h.addEventListener("click", () => {
+            h.classList.toggle("fas")
+        })
+    })
 }
+
 
 DisplayMedia.mainMedia()
 DisplayMedia.createSortList()
 mainTotalLikes()
+
 
 
 

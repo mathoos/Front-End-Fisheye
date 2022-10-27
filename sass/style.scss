@@ -144,10 +144,8 @@ header {
                 padding: 11px;
                 width: 170px;
                 height: 70px;
-                border: none;
                 background-color: #901C1C;
                 border-radius: 5px;
-                cursor: pointer;
             }
         }
     
@@ -178,45 +176,74 @@ header {
         gap : 5vw;
     
         &_list{
-            width : 10vw;
+            width : 15vw;
             color : white;
+            border-radius : 0 0 5px 5px;
+            overflow : hidden;
+
 
             button {
+                position : relative;
                 display : flex;
                 justify-content: space-between;
-                cursor: pointer;
-                background-color: #901C1C;
-
-                &:hover, &:focus-visible {
-                    outline: none;
-                    background-color: #DB8876; 
-                }
+                align-items: center;       
+                font-size: 20px;
+                font-weight: bold;
+                color: white;
+                height: 70px;
+                text-align : left;
+                padding : 0 2vw;
+                background-color: #901C1C;                          
 
                 i{
+                    position : absolute;
+                    right : 2vw;
+                    top : 50%;
+                    transform : translateY(-50%);
                     font-size : 15px;
                     color : white;
                     transition: .3s ease-out;
+                    &.chevron-up {
+                        transform: translateY(-50%) rotate(-180deg);
+                        transition: .3s ease-out;
+                    }
                 }
             }
 
             .selected {
                 width : 100%;
-                color : white;
+                border-radius: 5px;
+                &.border{
+                    border-radius : 5px 5px 0 0;
+                    transition: .2s linear;
+                }
             }
             
             .options {
                 display: flex;
                 flex-direction: column;
+                border-radius : 0 0 5px 5px;
                 transform-origin: 50% 0%;
-                color: white;
                 transition: .2s linear;
+                background-color: #901C1C;
+
+                button{
+                    position : relative;
+                    &::after{
+                        position : absolute;
+                        content : '';
+                        top : 0;
+                        left : 50%;
+                        transform : translateX(-50%);
+                        width : 80%;
+                        height : 1px;
+                        background-color: white;
+                    }
+                }
             }
         }
     
-        .chevron-up {
-            transform: rotate(-180deg);
-            transition: .3s ease-out;
-        }
+        
         .hidden {
             transform: scaleY(0);
             transition: .2s linear;
@@ -289,11 +316,6 @@ header {
                 }
 
                 button{
-                    cursor : pointer;
-                    width : fit-content;
-                    padding : 0;
-                    margin : 0;
-
                     i{
                         font-size : 1.5rem;
                     }               
@@ -433,10 +455,8 @@ header {
                 padding: 11px;
                 width: 170px;
                 height: 70px;
-                border: none;
                 background-color: #901C1C;
                 border-radius: 5px;
-                cursor: pointer;
             }
         }
     }
@@ -491,12 +511,6 @@ header {
     width : 100%;
     height : 100%;
     object-fit: contain;
-}
-
-button{
-    background-color: transparent;
-    outline : none;
-    border : none;
 }
 
 i{
