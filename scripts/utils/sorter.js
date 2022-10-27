@@ -78,9 +78,9 @@ function organizeSortList(opt){
 
 function refreshSortList(opt) {
     organizeSortList(opt);
-    Lightbox.init()   
+    addLikes();
+    Lightbox.init();
     sortList();
-    mainTotalLikes()
 }
 
 function dateFilter(a, b) {

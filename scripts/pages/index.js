@@ -1,4 +1,4 @@
-async function getPhotographers(){
+async function getData(){
     try{
         const res = await fetch('data/photographers.json');
         const ok = await res.json();
@@ -11,7 +11,6 @@ async function getPhotographers(){
 
 
 class PhotographerFactory {
-
     constructor(photographers) {
         this.photographers = photographers
     }
@@ -38,17 +37,22 @@ class PhotographerFactory {
 }
 
 
-async function displayData(photographers) {
+function displayData(photographers) {
     photographersWrapper = document.querySelector('.photographers')
     photographers.forEach((photographer) => {
+        console.log(photographers)
         photographersWrapper.appendChild(new PhotographerFactory(photographer).createPhotographerCard())
     }) 
 }
 
 
+
 async function init() {
-    const res = await getPhotographers();
+    const res = await getData();
     displayData(res.photographers);
+
 }
+
+
 
 init();

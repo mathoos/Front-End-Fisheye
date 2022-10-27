@@ -1,20 +1,19 @@
-// Obtenir l'id de l'url
+async function getData(){
+  try{
+    const res = await fetch('data/photographers.json');
+    const ok = await res.json();
+    return ok;     
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
 
 const photographerUrl = window.location.search;
 const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get('id');
-console.log(photographerId)
 
-async function getPhotographers() {
-  try {
-    const response = await fetch('data/photographers.json');
-    const data = await response.json();
-    const photographersData = await data.photographers;
-    return photographersData;
-  } catch (e) {
-    console.log(e);
-  }
-}
+
 
 async function getMedias() {
   try {
@@ -22,7 +21,8 @@ async function getMedias() {
     const data = await response.json();
     const mediasData = await data.media;
     return mediasData;
-  } catch (e) {
+  }
+  catch (e) {
     console.log(e);
   }
 }
@@ -56,7 +56,7 @@ class Photographers {
     return wrapper;
   }
 
-  createBottomWrapper(){
+  createTotalLikes(){
     const wrapper = document.createElement('div');
     wrapper.classList.add('likes_container');
 
@@ -71,7 +71,7 @@ class Photographers {
     return wrapper;
   }
 
-  FormNamePhotographer(){
+  createFormName(){
     const wrapper = document.createElement('h2');
     wrapper.classList.add('photographer-name');
 
@@ -85,54 +85,40 @@ class Photographers {
   }
 }
 
-
-class PhotographerHeader {
-  constructor() {
-    this.photographersHeader = document.querySelector('.photographer_header');
-  }
-
-  async main() {
-    const photographersData = await getPhotographers();
-    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
-    photographerFilter.forEach((header) => {
-        this.photographersHeader.appendChild(new Photographers(header).createPhotographerHeader()
-        )
-    })
-  }
+function displayPhotographerHeader(photographerFilter){
+  photographersHeader = document.querySelector('.photographer_header');
+  photographerFilter.forEach((photographer) => {
+      photographersHeader.appendChild(new Photographers(photographer).createPhotographerHeader()
+      )
+  })
 }
 
-class WrapperBottom{
-  constructor() {
-    this.MediasBottom = document.querySelector('.likes');
-  }
-   async main() {
-    const photographersData = await getPhotographers();
-    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
-
-    photographerFilter.forEach((price) => {
-        this.MediasBottom.appendChild(new Photographers(price).createBottomWrapper()
-        )
-    })
-  }
+function displayTotalLikes(photographerFilter){
+  MediasBottom = document.querySelector('.likes');
+  photographerFilter.forEach((price) => {
+    MediasBottom.appendChild(new Photographers(price).createTotalLikes()
+    )
+  })
 }
 
-class FormNamePhotographer{
-  constructor() {
-    this.namePhotographer = document.querySelector('.name');
-  }
-   async main() {
-    const photographersData = await getPhotographers();
-    const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
-
-    photographerFilter.forEach((name) => {
-        this.namePhotographer.appendChild(new Photographers(name).FormNamePhotographer()
-        )
-    })
-  }
+function displayFormName(photographerFilter){
+  namePhotographer = document.querySelector('.name');
+  photographerFilter.forEach((name) => {
+    namePhotographer.appendChild(new Photographers(name).createFormName()
+    )
+  })
 }
 
-new PhotographerHeader().main()
-new WrapperBottom().main()
-new FormNamePhotographer().main()
+async function init() {
+  const res = await getData();
+  const photographersData = res.photographers
+  const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
+  displayPhotographerHeader(photographerFilter)
+  displayTotalLikes(photographerFilter)
+  displayFormName(photographerFilter)
+}
 
 
+
+
+init()
