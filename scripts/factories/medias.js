@@ -75,12 +75,11 @@ function displayMedia(mediaFilter){
 }
 
 function initLikes(mediaFilter){
-    likesWrapper = document.querySelector(".likes_bloc-total")
     let totaldeLikes = 0  
 
     mediaFilter.forEach((media) => {          
         totaldeLikes = totaldeLikes += media.likes    
-        likesWrapper.innerHTML = `${totaldeLikes}`;
+        document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}`;
     }); 
     
     addLikes()
@@ -88,35 +87,31 @@ function initLikes(mediaFilter){
 
 function addLikes() {
     
-    let allLikes = document.querySelectorAll('.likes-value')
-    let eltsTotalLikes = document.querySelector('.likes_bloc-total')
-    let totalLikes = parseInt(eltsTotalLikes.innerText)
-    let likesArray = Array.from(document.querySelectorAll('.like'));
-
-    for (let i = 0; i < likesArray.length; i++) {
+    let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
+    let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
+    likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
         let liked = false;
-        likesArray[i].addEventListener("click", () => {
-            likesArray[i].classList.toggle("fas")
-            let eltLikeByMedia = allLikes[i]
-            let likeByMedia = parseInt(allLikes[i].innerText)
-              
+        jaime.addEventListener('click', () => {
+           
             if (!liked) {
-                let addLike = likeByMedia + 1
-                eltLikeByMedia.innerText = addLike
-                let addToTotalLikes = totalLikes += 1
-                eltsTotalLikes.innerText = addToTotalLikes
+                jaime.classList.add("fas")
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) + 1;
+                totalOfLikes += 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
                 liked = true;
             }
             else {
-                let addLike = likeByMedia - 1
-                eltLikeByMedia.innerText = addLike
-                let addToTotalLikes = totalLikes -= 1
-                eltsTotalLikes.innerText = addToTotalLikes
+                jaime.classList.remove("fas")
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) - 1;
+                totalOfLikes -= 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
                 liked = false;
-
             }
-        })
-    }
+        });
+    });
+
 
     
 }
@@ -153,7 +148,6 @@ async function init() {
     const mediasData = res.media;
     let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
     mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
-    console.log(mediaFilter)
     displayMedia(mediaFilter)
     initLikes(mediaFilter)
     createSortList()
