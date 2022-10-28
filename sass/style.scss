@@ -3,7 +3,6 @@
 *{
     box-sizing: border-box;
     background-color: transparent;
-    outline : none;
     border : none;
     font-family: "DM Sans", sans-serif;
     margin: 0;
@@ -24,10 +23,16 @@ header {
         img{
             height : 50px;
         }
+
+        &:focus{
+            outline : 2px solid #db897687;
+            box-sizing: content-box;
+            box-shadow: #db897687 1px 1px;
+        }      
     }
 
     h1 {
-        color: #901C1C;  
+        color: #901C1C; 
     }
 }
 
@@ -54,6 +59,11 @@ header {
             align-items: center;
             gap : 5vh;
             text-decoration: none;
+            &:focus{
+                outline : 2px solid #db897687;
+                box-sizing: content-box;
+                box-shadow: #db897687 1px 1px;
+            } 
 
             img{
                 height: 200px;
@@ -108,6 +118,7 @@ header {
         align-items : center;
         background-color: #FAFAFA;
         padding : 2vw;
+
         &_info{
             display : flex;
             flex-direction: column;
@@ -146,6 +157,11 @@ header {
                 height: 70px;
                 background-color: #901C1C;
                 border-radius: 5px;
+                cursor : pointer;
+                &:hover, &:focus{
+                    background-color: #DB8876;
+                    outline : 2px solid #db897687;
+                }
             }
         }
     
@@ -193,7 +209,13 @@ header {
                 height: 70px;
                 text-align : left;
                 padding : 0 2vw;
-                background-color: #901C1C;                          
+                background-color: #901C1C; 
+                border-radius : 5px;  
+                cursor : pointer;
+                &:hover, &:focus{
+                    background-color: #DB8876;
+                    
+                }                       
 
                 i{
                     position : absolute;
@@ -253,8 +275,6 @@ header {
 
 
 
-
-
 /* MEDIAS */ 
 
 
@@ -308,7 +328,6 @@ header {
                 align-items: center;
                 height : fit-content;
                 gap : .5vw;   
-                border : 1px solid red;
 
                 p{
                     font-size : 20px;
@@ -319,6 +338,11 @@ header {
 
                 i{
                     font-size : 1.5rem;
+                    &:focus{
+                        outline : 2px solid #db897687;
+                        box-sizing: content-box;
+                        box-shadow: #db897687 1px 1px;
+                    } 
                 }               
                 
             }

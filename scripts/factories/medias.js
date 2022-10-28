@@ -19,7 +19,7 @@ class Media {
             </div>
             <div class="medias_card-down--likes">
                 <p class="likes-value">${this.media.likes}</p>             
-                <i class="far fa-heart like" data-id="${this.media.id}"></i>   
+                <i class="far fa-heart like" data-id="${this.media.id}" tabindex="0"></i>   
             </div>
         </div>
         `;
@@ -86,12 +86,12 @@ function initLikes(mediaFilter){
 }
 
 function addLikes() {
-    
     let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
     let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
     likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
         let liked = false;
         jaime.addEventListener('click', () => {
+          
            
             if (!liked) {
                 jaime.classList.add("fas")
@@ -110,13 +110,18 @@ function addLikes() {
                 liked = false;
             }
         });
-    });
 
-
-    
+        
+    });   
 }
 
-
+document.addEventListener("keyup", keyboardAcces)
+        function keyboardAcces(e) {
+            if (e.key === "Escape") {
+                console.log("coucou")
+                addLikes()
+            }
+        }
 function createSortList() {
     const wrapper = document.createElement('div');
     wrapper.classList.add('sort');

@@ -52,10 +52,6 @@ export*/ class Lightbox{
         })
     }
 
-    // faire méthode init listener pour le forEach
-
-    
-
     loadImage(url){
         this.url = url
         const imgExtension = url.split(".").pop();

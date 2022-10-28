@@ -1,15 +1,33 @@
+const modal = document.getElementById("contact_modal");
+const header = document.querySelector("header")
+const photographerHeader = document.querySelector(".photographer_header")
+const mediasSort = document.querySelector(".medias-sort")
+const medias = document.querySelector(".medias")
+const likes = document.querySelector(".likes")
 
-// Ouvrir la modale
-function displayModal() {
-    const modal = document.getElementById("contact_modal");
+
+function displayModal() {   
 	modal.style.display = "flex";
+    modal.setAttribute("aria-hidden", false)
+    header.setAttribute("aria-hidden", true)
+    photographerHeader.setAttribute("aria-hidden", true)
+    mediasSort.setAttribute("aria-hidden", true)
+    medias.setAttribute("aria-hidden", true)
+    likes.setAttribute("aria-hidden", true)
 }
 
 // Fermer la modale
 function closeModal() {
-    const modal = document.getElementById("contact_modal");
     modal.style.display = "none";
+    modal.setAttribute("aria-hidden", true)
+    header.setAttribute("aria-hidden", false)
+    photographerHeader.setAttribute("aria-hidden", false)
+    mediasSort.setAttribute("aria-hidden", false)
+    medias.setAttribute("aria-hidden", false)
+    likes.setAttribute("aria-hidden", false)
 }
+
+
 
 
 // Récupérer prénom

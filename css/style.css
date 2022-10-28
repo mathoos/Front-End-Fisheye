@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
   background-color: transparent;
-  outline: none;
   border: none;
   font-family: "DM Sans", sans-serif;
   margin: 0;
@@ -16,6 +15,11 @@ header {
 }
 header a img {
   height: 50px;
+}
+header a:focus {
+  outline: 2px solid rgba(219, 137, 118, 0.5294117647);
+  box-sizing: content-box;
+  box-shadow: rgba(219, 137, 118, 0.5294117647) 1px 1px;
 }
 header h1 {
   color: #901C1C;
@@ -41,6 +45,11 @@ header h1 {
   align-items: center;
   gap: 5vh;
   text-decoration: none;
+}
+.photographers_card-up:focus {
+  outline: 2px solid rgba(219, 137, 118, 0.5294117647);
+  box-sizing: content-box;
+  box-shadow: rgba(219, 137, 118, 0.5294117647) 1px 1px;
 }
 .photographers_card-up img {
   height: 200px;
@@ -118,6 +127,11 @@ header h1 {
   height: 70px;
   background-color: #901C1C;
   border-radius: 5px;
+  cursor: pointer;
+}
+.photographer_header .photographer_contact button:hover, .photographer_header .photographer_contact button:focus {
+  background-color: #DB8876;
+  outline: 2px solid rgba(219, 137, 118, 0.5294117647);
 }
 .photographer_header .photographer_photo img {
   height: 200px;
@@ -153,6 +167,11 @@ header h1 {
   text-align: left;
   padding: 0 2vw;
   background-color: #901C1C;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.medias-sort .sort_list button:hover, .medias-sort .sort_list button:focus {
+  background-color: #DB8876;
 }
 .medias-sort .sort_list button i {
   position: absolute;
@@ -248,7 +267,6 @@ header h1 {
   align-items: center;
   height: fit-content;
   gap: 0.5vw;
-  border: 1px solid red;
 }
 .medias_card-down--likes p {
   font-size: 20px;
@@ -258,6 +276,11 @@ header h1 {
 }
 .medias_card-down--likes i {
   font-size: 1.5rem;
+}
+.medias_card-down--likes i:focus {
+  outline: 2px solid rgba(219, 137, 118, 0.5294117647);
+  box-sizing: content-box;
+  box-shadow: rgba(219, 137, 118, 0.5294117647) 1px 1px;
 }
 
 /* TOTAL LIKES */

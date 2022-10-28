@@ -11,36 +11,36 @@
   <body>
     
 
-    <header>
-      <a href="index.html">
-        <img src="assets/images/logo.png" class="logo" alt="Fisheye Home Page" />
+    <header role="banner" aria-label="En-tête de la page" aria-hidden="false">
+      <a href="index.html" title="Lien vers la page d'acceuil">
+        <img src="assets/images/logo.png" class="logo" alt="Logo du site Fisheye"/>
       </a>
     </header>
 
     <!-- CONTENU PRINCIPAL -->
 
-    <main id="main">
+    <main aria-label="Contenu principal de la page photographe">
 
       <!-- HEADER PHOTOGRAPHE -->
-      <div class="photographer_header"></div>
+      <div class="photographer_header" aria-hidden="false"></div>
         
       <!-- FILTRE -->
 
-      <div class="medias-sort"></div>
+      <div class="medias-sort" aria-hidden="false"></div>
 
       <!-- MEDIAS -->
-      <div class="medias"></div>
+      <div class="medias" aria-hidden="false"></div>
 
       <!--LIKES TOTAL -->
-      <div class="likes"></div>
+      <div class="likes" aria-hidden="false"></div>
 
       <!-- FORM CONTACT -->
 
-      <div class="contact_modal" id="contact_modal">
+      <div class="contact_modal" id="contact_modal" role="dialog" aria-label="modal" aria-hidden="true">
         <div class="contact_modal-container">
           <div class="contact_modal-container--top">
             <h2 class="name">Contactez-moi</h2>
-            <img src="assets/icons/close.svg" onclick="closeModal()" />
+            <img src="assets/icons/close.svg" role="Close dialog" onclick="closeModal()" tabindex="0"/>
           </div>
 
           <form action="index.html" method="get">

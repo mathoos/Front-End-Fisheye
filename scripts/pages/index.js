@@ -18,17 +18,18 @@ class PhotographerFactory {
     createPhotographerCard() {
         const wrapper = document.createElement('article')
         wrapper.classList.add('photographers_card')
+        wrapper.setAttribute("aria-label", "Bloc relatif à un photographe")
 
         const photographerCard = 
         `
-            <a class="photographers_card-up" href="photographer.html?id=${this.photographers.id}" alt="${this.photographers.name}">
-                <img src="assets/photographers/${this.photographers.portrait}">
+            <a class="photographers_card-up" href="photographer.html?id=${this.photographers.id}" title="${this.photographers.name}">
+                <img src="assets/photographers/${this.photographers.portrait}" alt="${this.photographers.name}">
                 <h2>${this.photographers.name}</h2>
             </a>
-            <div class="photographers_card-down">
-                <p class="city">${this.photographers.city}, ${this.photographers.country}</p>
-                <p class="tagline">${this.photographers.tagline}</p>
-                <p class="price">${this.photographers.price}€/jour</p>
+            <div class="photographers_card-down" aria-label="Informations relatives au photographe">
+                <p class="city" aria-label="Pays et ville du photographe">${this.photographers.city}, ${this.photographers.country}</p>
+                <p class="tagline" aria-label="Citation du photographe">${this.photographers.tagline}</p>
+                <p class="price" aria-label="Prix du photographe">${this.photographers.price}€/jour</p>
             </div>
         `
         wrapper.innerHTML = photographerCard
@@ -40,7 +41,6 @@ class PhotographerFactory {
 function displayData(photographers) {
     photographersWrapper = document.querySelector('.photographers')
     photographers.forEach((photographer) => {
-        console.log(photographers)
         photographersWrapper.appendChild(new PhotographerFactory(photographer).createPhotographerCard())
     }) 
 }

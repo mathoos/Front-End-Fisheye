@@ -39,7 +39,7 @@ class Photographers {
 
     const photographerHeader =
         `
-        <div class="photographer_info">
+        <div class="photographer_info" aria-label="Informations relatives au photographe ${this.photographers.name}">
             <h1>${this.photographers.name}</h1>
             <p class="city">${this.photographers.city}, ${this.photographers.country}</p>
             <p class="tagline">${this.photographers.tagline}</p>
