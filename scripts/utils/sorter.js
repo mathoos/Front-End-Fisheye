@@ -1,7 +1,4 @@
-async function sortList() {
-    const mediasData = await getMedias();
-    let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-    mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
+function sortList(mediaFilter) { 
     
     const selectElement = document.querySelector(".selected");
     const options = document.querySelector(".options");
@@ -112,5 +109,3 @@ function titleFilter(a, b) {
     }
     return 0;
 }
-
-sortList();

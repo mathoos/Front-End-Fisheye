@@ -288,26 +288,25 @@ header h1 {
   position: fixed;
   bottom: 0;
   right: 2.5vw;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  gap: 3vw;
   padding: 2vh 3vw;
   border-radius: 5px 5px 0 0;
   background-color: #DB8876;
 }
-.likes_bloc {
+.likes_container {
   display: flex;
-  align-items: center;
-  gap: 0.5vw;
+  gap: 1.5vw;
 }
 .likes_bloc-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5vw;
   font-size: 24px;
   font-weight: 500;
-  width: 4vw;
+  width: 5vw;
   text-align: right;
 }
-.likes_bloc i {
+.likes_bloc-total i {
   font-size: 1.5rem;
 }
 .likes_price {

@@ -62,7 +62,9 @@ class Photographers {
 
     const mediaWrapper =
     `
-    <h1 class="likes_bloc-total"></h1>
+    <h1 class="likes_bloc-total">
+    </h1>
+    
     <p class="likes_price">${this.photographers.price}€/jour</p>
 
     `;

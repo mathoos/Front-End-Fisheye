@@ -360,29 +360,25 @@ header {
     position : fixed;
     bottom : 0;
     right : 2.5vw;
-    display : flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    gap : 3vw;
     padding : 2vh 3vw;
     border-radius : 5px 5px 0 0;
     background-color: #DB8876;
 
     &_container{
-       
+        display : flex;
+        gap : 1.5vw;
     }
 
-    &_bloc{
+    &_bloc-total{
         display : flex;
         align-items : center;
+        justify-content: space-between;
         gap : .5vw;
+        font-size : 24px;
+        font-weight : 500;
+        width : 5vw;
+        text-align : right;
 
-        &-total{
-            font-size : 24px;
-            font-weight : 500;
-            width : 4vw;
-            text-align : right;
-        }
         i{
             font-size : 1.5rem;
         }

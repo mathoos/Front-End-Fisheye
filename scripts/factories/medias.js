@@ -64,7 +64,7 @@ class MediaFactory {
     }
 }
 
-//MediasWrapper = document.querySelector('.medias');
+MediasWrapper = document.querySelector('.medias');
 
 function displayMedia(mediaFilter){
     MediasWrapper = document.querySelector('.medias');
@@ -74,54 +74,6 @@ function displayMedia(mediaFilter){
     });   
 }
 
-function initLikes(mediaFilter){
-    let totaldeLikes = 0  
-
-    mediaFilter.forEach((media) => {          
-        totaldeLikes = totaldeLikes += media.likes    
-        document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}`;
-    }); 
-    
-    addLikes()
-}
-
-function addLikes() {
-    let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
-    let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
-    likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
-        let liked = false;
-        jaime.addEventListener('click', () => {
-          
-           
-            if (!liked) {
-                jaime.classList.add("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) + 1;
-                totalOfLikes += 1;
-                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-                liked = true;
-            }
-            else {
-                jaime.classList.remove("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) - 1;
-                totalOfLikes -= 1;
-                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-                liked = false;
-            }
-        });
-
-        
-    });   
-}
-
-document.addEventListener("keyup", keyboardAcces)
-        function keyboardAcces(e) {
-            if (e.key === "Escape") {
-                console.log("coucou")
-                addLikes()
-            }
-        }
 function createSortList() {
     const wrapper = document.createElement('div');
     wrapper.classList.add('sort');
@@ -145,9 +97,58 @@ function createSortList() {
 
     wrapper.innerHTML = mediaWrapper;
     document.querySelector(".medias-sort").appendChild(wrapper)      
-}   
-  
-  
+}
+
+function initLikes(mediaFilter){
+    let totaldeLikes = 0  
+
+    mediaFilter.forEach((media) => {          
+        totaldeLikes = totaldeLikes += media.likes    
+        document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}<i class="fas fa-heart"></i></h1>`;
+    }); 
+    
+    addLikes(mediaFilter)
+}
+
+function addLikes(mediaFilter) {
+    let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
+    let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
+    likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
+        let liked = false;
+        jaime.addEventListener('click', (e) => {     
+            
+            const id = e.target.getAttribute('data-id')
+            console.log(id)
+            let mediaFound = mediaFilter.find((media) => media.id == id )
+            mediaFound.likes +=1
+            console.log(mediaFound.likes)
+
+            if (!liked) {
+                jaime.classList.add("fas")
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) + 1;
+                totalOfLikes += 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
+                liked = true;
+                mediaFound.likes +=1
+            }
+            else {
+                jaime.classList.remove("fas")
+                jaime.previousElementSibling.innerText =
+                parseInt(jaime.previousElementSibling.innerText) - 1;
+                totalOfLikes -= 1;
+                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
+                liked = false;
+                mediaFound.likes -=1
+            }
+        });
+    });   
+}
+
+
+
+
+
 async function init() {
     const res = await getData();
     const mediasData = res.media;
@@ -156,6 +157,7 @@ async function init() {
     displayMedia(mediaFilter)
     initLikes(mediaFilter)
     createSortList()
+    sortList(mediaFilter);
     
 }
   
