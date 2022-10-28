@@ -15,19 +15,6 @@ const photographerId = urlParams.get('id');
 
 
 
-async function getMedias() {
-  try {
-    const response = await fetch('data/photographers.json');
-    const data = await response.json();
-    const mediasData = await data.media;
-    return mediasData;
-  }
-  catch (e) {
-    console.log(e);
-  }
-}
-
-
 class Photographers {
   constructor(photographers) {
     this.photographers = photographers;
@@ -124,3 +111,17 @@ async function init() {
 
 
 init()
+
+
+
+async function getMedias() {
+  try {
+    const response = await fetch('data/photographers.json');
+    const data = await response.json();
+    const mediasData = await data.media;
+    return mediasData;
+  }
+  catch (e) {
+    console.log(e);
+  }
+}

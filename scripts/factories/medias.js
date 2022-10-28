@@ -1,3 +1,5 @@
+ let mediaFilter = [];
+
 class Media {
     constructor(media) {
         this.media = media
@@ -18,8 +20,8 @@ class Media {
                 <p>${this.media.title}</p>
             </div>
             <div class="medias_card-down--likes">
-                <p class="likes-value">${this.media.likes}</p>             
-                <i class="far fa-heart like" data-id="${this.media.id}" tabindex="0"></i>   
+                <p class="likes-value">${this.likes}</p>             
+                <i role="button" class="far fa-heart like" data-id="${this.media.id}" tabindex="0"></i>   
             </div>
         </div>
         `;
@@ -101,16 +103,16 @@ function createSortList() {
 
 function initLikes(mediaFilter){
     let totaldeLikes = 0  
-
+    debugger
     mediaFilter.forEach((media) => {          
         totaldeLikes = totaldeLikes += media.likes    
         document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}<i class="fas fa-heart"></i></h1>`;
     }); 
     
-    addLikes(mediaFilter)
+    addLikes()
 }
 
-function addLikes(mediaFilter) {
+function addLikes() {
     let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
     let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
     likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
@@ -119,6 +121,7 @@ function addLikes(mediaFilter) {
             
             const id = e.target.getAttribute('data-id')
             console.log(id)
+            debugger
             let mediaFound = mediaFilter.find((media) => media.id == id )
             mediaFound.likes +=1
             console.log(mediaFound.likes)
@@ -130,7 +133,7 @@ function addLikes(mediaFilter) {
                 totalOfLikes += 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = true;
-                mediaFound.likes +=1
+                
             }
             else {
                 jaime.classList.remove("fas")
@@ -139,7 +142,7 @@ function addLikes(mediaFilter) {
                 totalOfLikes -= 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = false;
-                mediaFound.likes -=1
+                
             }
         });
     });   
@@ -152,12 +155,11 @@ function addLikes(mediaFilter) {
 async function init() {
     const res = await getData();
     const mediasData = res.media;
-    let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+    mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
     mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
     displayMedia(mediaFilter)
     initLikes(mediaFilter)
     createSortList()
-    sortList(mediaFilter);
     
 }
   
@@ -165,61 +167,6 @@ init()
 
 
 
-
-
-
-/*
-async function mainTotalLikes() {
-
-    const mediasData = await getMedias();
-    const mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
-
-
-    // Tableau qui regroupe tous les likes
-    let likes = mediaFilter.map((total) => total.likes); 
-    console.log(likes)
-    const initialValue = 0;
-    let totalLikes = likes.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
-    document.querySelector('.likes_bloc-total').innerHTML = totaldeLikes
-    
-    
-
-    // INCREMENTE NOMBRE DE LIKES AU CLICK
-    let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
-    let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
-    likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
-        let liked = false;
-        jaime.addEventListener('click', (e) => {
-            jaime.classList.toggle("fas")
-            const id = e.target.getAttribute('data-id')
-            console.log(id)
-            const mediaFound = mediaFilter.find((media) => media.id == id )
-            console.log(mediaFound)
-            mediaFound.likes +=1
-            mediaFound.likes
-            console.log(mediaFound.likes)
-
-            if (!liked) {
-            jaime.previousElementSibling.innerText =
-            parseInt(jaime.previousElementSibling.innerText) + 1;
-            totalOfLikes += 1;
-            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-            liked = true;
-            }
-            else {
-            jaime.previousElementSibling.innerText =
-            parseInt(jaime.previousElementSibling.innerText) - 1;
-            totalOfLikes -= 1;
-            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}`;
-            liked = false;
-            }
-        });
-    });
-}
-*/
-
-//DisplayMedia.mainMedia()
-//DisplayMedia.createSortList()
 
 
 
