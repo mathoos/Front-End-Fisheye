@@ -21,7 +21,9 @@ class Media {
             </div>
             <div class="medias_card-down--likes">
                 <p class="likes-value">${this.likes}</p>             
-                <i role="button" class="far fa-heart like" data-id="${this.media.id}" tabindex="0"></i>   
+                <button class="like">
+                    <i role="button" class="far fa-heart" data-id="${this.media.id}" tabindex="0"></i> 
+                </button>  
             </div>
         </div>
         `;
@@ -109,6 +111,7 @@ function initLikes(mediaFilter){
     }); 
     
     addLikes()
+    addLikesKey()
 }
 
 function addLikes() {
@@ -116,38 +119,58 @@ function addLikes() {
     let likesArray = Array.from(document.querySelectorAll('.like')); 
     likesArray.forEach((jaime) => { 
         let liked = false;
-        jaime.addEventListener('click', (e) => {     
-            
-            const id = e.target.getAttribute('data-id')
-            console.log(id)
-            let mediaFound = mediaFilter.find((media) => media.id == id )
-            mediaFound.likes +=1
-            console.log(mediaFound.likes)
+        jaime.addEventListener('click', () => {               
+            /*const id = e.target.getAttribute('data-id')
+            let mediaFound = mediaFilter.find((media) => media.id == id )*/
 
             if (!liked) {
-                jaime.classList.add("fas")
+                jaime.firstElementChild.classList.add("fas")
                 jaime.previousElementSibling.innerText =
                 parseInt(jaime.previousElementSibling.innerText) + 1;
                 totalOfLikes += 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
-                liked = true;
-                mediaFound.likes +=1
-                
+                liked = true;               
             }
             else {
-                jaime.classList.remove("fas")
+                jaime.firstElementChild.classList.remove("fas")
                 jaime.previousElementSibling.innerText =
                 parseInt(jaime.previousElementSibling.innerText) - 1;
                 totalOfLikes -= 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
-                liked = false;
-                mediaFound.likes -=1
-                
+                liked = false;          
             }
         });
+
+        
     });   
 }
 
+function addLikesKey(){
+    let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
+    let likesArray = Array.from(document.querySelectorAll('.like')); 
+    likesArray.forEach((jaime) => { 
+        let liked = false;
+    jaime.addEventListener('keyup', (e) => {               
+
+        if (e.key === "enter") {
+            jaime.classList.add("fas")
+            jaime.previousElementSibling.innerText =
+            parseInt(jaime.previousElementSibling.innerText) + 1;
+            totalOfLikes += 1;
+            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
+            liked = true;   
+        }
+        else {
+            jaime.classList.remove("fas")
+            jaime.previousElementSibling.innerText =
+            parseInt(jaime.previousElementSibling.innerText) - 1;
+            totalOfLikes -= 1;
+            document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
+            liked = false;            
+        }
+    });
+}); 
+}
 
 
 
