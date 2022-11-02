@@ -1,4 +1,4 @@
- let mediaFilter = [];
+let mediaFilter = [];
 
 class Media {
     constructor(media) {
@@ -103,7 +103,6 @@ function createSortList() {
 
 function initLikes(mediaFilter){
     let totaldeLikes = 0  
-    debugger
     mediaFilter.forEach((media) => {          
         totaldeLikes = totaldeLikes += media.likes    
         document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}<i class="fas fa-heart"></i></h1>`;
@@ -114,14 +113,13 @@ function initLikes(mediaFilter){
 
 function addLikes() {
     let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
-    let likesArray = Array.from(document.querySelectorAll('.like')); // Créé un tableau de tous les <p class="jaime"></p>
-    likesArray.forEach((jaime) => { // boucle à travers chaque .jaime
+    let likesArray = Array.from(document.querySelectorAll('.like')); 
+    likesArray.forEach((jaime) => { 
         let liked = false;
         jaime.addEventListener('click', (e) => {     
             
             const id = e.target.getAttribute('data-id')
             console.log(id)
-            debugger
             let mediaFound = mediaFilter.find((media) => media.id == id )
             mediaFound.likes +=1
             console.log(mediaFound.likes)
@@ -133,6 +131,7 @@ function addLikes() {
                 totalOfLikes += 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = true;
+                mediaFound.likes +=1
                 
             }
             else {
@@ -142,6 +141,7 @@ function addLikes() {
                 totalOfLikes -= 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = false;
+                mediaFound.likes -=1
                 
             }
         });
