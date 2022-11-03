@@ -139,31 +139,14 @@ function addLikes() {
                 liked = false;          
             }
         });
-
-        jaime.addEventListener('keyup', (e) => {               
-
-            if (!liked || e.keyCode === "enter") {
-                jaime.classList.add("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) + 1;
-                totalOfLikes += 1;
-                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
-                liked = true;   
-            }
-            else {
-                jaime.classList.remove("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) - 1;
-                totalOfLikes -= 1;
-                document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
-                liked = false;            
-            }
-        });
-
-        
     });   
 }
 
+function likesKey(e){
+    if(e.key === "enter"){
+       addLikes()
+    }
+}
 
     
 
