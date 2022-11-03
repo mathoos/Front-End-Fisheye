@@ -79,7 +79,6 @@ function organizeSortList(opt){
 function refreshSortList(opt) {
     organizeSortList(opt);
     addLikes();
-    addLikesKey()
     Lightbox.init();
     sortList();
 }
