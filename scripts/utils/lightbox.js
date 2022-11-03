@@ -1,5 +1,20 @@
 /*import {getMedias} from "../pages/photographer.js"
-export*/ class Lightbox{
+export*/ 
+
+async function getMedias() {
+    try {
+      const response = await fetch('data/photographers.json');
+      const data = await response.json();
+      const mediasData = await data.media;
+      return mediasData;
+    }
+    catch (e) {
+      console.log(e);
+    }
+}
+
+
+class Lightbox{
 
     constructor(url, images, media){
         this.media = media

@@ -9,9 +9,17 @@ async function getData(){
   }
 }
 
+// Variables
 const photographerUrl = window.location.search;
 const urlParams = new URLSearchParams(photographerUrl);
 const photographerId = urlParams.get('id');
+
+const modal = document.querySelector(".contact_modal");
+const header = document.querySelector("header")
+const photographerHeader = document.querySelector(".photographer_header")
+const mediasSort = document.querySelector(".medias-sort")
+const medias = document.querySelector(".medias")
+const likes = document.querySelector(".likes")
 
 
 
@@ -32,7 +40,7 @@ class Photographers {
             <p class="tagline">${this.photographers.tagline}</p>
         </div>
         <div class="photographer_contact">
-            <button class="contact_button" alt="Contact Me" onclick="displayModal()">Contactez-moi</button>
+            <button class="contact_button" id="contact_button" alt="Contact Me" aria-label="Ouvrir la modale">Contactez-moi</button>
         </div>  
         <div class="photographer_photo">
             <img src="assets/photographers/${this.photographers.portrait}" alt ="${this.photographers.name}">
@@ -74,8 +82,10 @@ class Photographers {
   }
 }
 
+
+
 function displayPhotographerHeader(photographerFilter){
-  photographersHeader = document.querySelector('.photographer_header');
+  const photographersHeader = document.querySelector('.photographer_header');
   photographerFilter.forEach((photographer) => {
       photographersHeader.appendChild(new Photographers(photographer).createPhotographerHeader()
       )
@@ -83,20 +93,46 @@ function displayPhotographerHeader(photographerFilter){
 }
 
 function displayTotalLikes(photographerFilter){
-  MediasBottom = document.querySelector('.likes');
+  const MediasBottom = document.querySelector('.likes');
   photographerFilter.forEach((price) => {
     MediasBottom.appendChild(new Photographers(price).createTotalLikes()
     )
   })
 }
 
+function displayForm(){
+  let boutonForm = document.getElementById("contact_button");
+  let closeForm = document.getElementById("closeForm")
+  boutonForm.addEventListener("click", () => {
+    modal.style.display = "flex";
+    modal.setAttribute("aria-hidden", false)
+    header.setAttribute("aria-hidden", true)
+    photographerHeader.setAttribute("aria-hidden", true)
+    mediasSort.setAttribute("aria-hidden", true)
+    medias.setAttribute("aria-hidden", true)
+    likes.setAttribute("aria-hidden", true)
+  })
+  closeForm.addEventListener("click", () => {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", true)
+    header.setAttribute("aria-hidden", false)
+    photographerHeader.setAttribute("aria-hidden", false)
+    mediasSort.setAttribute("aria-hidden", false)
+    medias.setAttribute("aria-hidden", false)
+    likes.setAttribute("aria-hidden", false)
+  })
+}
+
 function displayFormName(photographerFilter){
-  namePhotographer = document.querySelector('.name');
+  const namePhotographer = document.querySelector('.name');
   photographerFilter.forEach((name) => {
     namePhotographer.appendChild(new Photographers(name).createFormName()
     )
   })
 }
+
+
+
 
 async function init() {
   const res = await getData();
@@ -104,6 +140,7 @@ async function init() {
   const photographerFilter = photographersData.filter((photographer) => photographer.id == photographerId);
   displayPhotographerHeader(photographerFilter)
   displayTotalLikes(photographerFilter)
+  displayForm()
   displayFormName(photographerFilter)
 }
 
@@ -114,14 +151,3 @@ init()
 
 
 
-async function getMedias() {
-  try {
-    const response = await fetch('data/photographers.json');
-    const data = await response.json();
-    const mediasData = await data.media;
-    return mediasData;
-  }
-  catch (e) {
-    console.log(e);
-  }
-}

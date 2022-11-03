@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
   <head>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/png" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/28a239a532.js" crossorigin="anonymous"></script>
@@ -11,9 +14,9 @@
   <body>
     
 
-    <header role="banner" aria-label="En-tête de la page" aria-hidden="false">
+    <header aria-label="En-tête de la page" aria-hidden="false">
       <a href="index.html" title="Lien vers la page d'accueil">
-        <img src="assets/images/logo.png" class="logo" alt="Logo du site Fisheye"/>
+        <img src="assets/images/logo.png" class="logo" alt="Logo du site Fisheye">
       </a>
     </header>
 
@@ -22,47 +25,45 @@
     <main aria-label="Contenu principal de la page photographe">
 
       <!-- HEADER PHOTOGRAPHE -->
-      <div class="photographer_header" aria-label="Bannière du photographe" aria-hidden="false"></div>
+      <div class="photographer_header" aria-hidden="false">       
+      </div>
         
       <!-- FILTRE -->
-
       <div class="medias-sort" aria-hidden="false"></div>
 
       <!-- MEDIAS -->
-      <div class="medias" aria-label="Tous les medias du photographes" aria-hidden="false"></div>
+      <div class="medias" aria-hidden="false"></div>
 
       <!--LIKES TOTAL -->
       <div class="likes" aria-hidden="false"></div>
 
       <!-- FORM CONTACT -->
-
-      <div class="contact_modal" id="contact_modal" role="dialog" aria-label="modal" aria-hidden="true">
+      <div class="contact_modal" role="dialog" aria-label="modal" aria-describedby="contactModal" aria-hidden="true">
         <div class="contact_modal-container">
           <div class="contact_modal-container--top">
-            <h2 class="name">Contactez-moi</h2>
-            <img src="assets/icons/close.svg" role="Close dialog" onclick="closeModal()" tabindex="0"/>
+            <h2 class="name" id="contactModal">Contactez-moi</h2>
+            <img src="assets/icons/close.svg" id="closeForm" alt="Fermer la modale de contact" role="button" aria-label="Fermer la modale" tabindex="0">
           </div>
 
           <form action="index.html" method="get">
-
             <fieldset class="formData">
               <label for="firstname">Prénom</label>
-              <input class="text-control" type="text" id="firstname" name="first" minlength="2"/>
+              <input class="text-control" type="text" id="firstname" name="first" minlength="2">
             </fieldset>
 
             <fieldset class="formData">
               <label for="lastname">Nom</label>
-              <input class="text-control" type="text" id="lastname" name="last"/>
+              <input class="text-control" type="text" id="lastname" name="last">
             </fieldset>
 
             <fieldset class="formData">
               <label for="email">E-mail</label>
-              <input class="text-control" type="email" id="email" name="email"/>
+              <input class="text-control" type="email" id="email" name="email">
             </fieldset>
 
             <fieldset class="formData">
               <label for="message">Votre message</label>
-              <textarea class="text-control" type="text" id="message" name="message"></textarea>
+              <textarea class="text-control" id="message" name="message"></textarea>
             </fieldset>
 
             <button class="contact_button" type="submit">Envoyer</button>

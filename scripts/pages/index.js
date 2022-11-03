@@ -39,7 +39,7 @@ class PhotographerFactory {
 
 
 function displayData(photographers) {
-    photographersWrapper = document.querySelector('.photographers')
+    const photographersWrapper = document.querySelector('.photographers')
     photographers.forEach((photographer) => {
         photographersWrapper.appendChild(new PhotographerFactory(photographer).createPhotographerCard())
     }) 

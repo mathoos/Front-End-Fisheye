@@ -1,4 +1,16 @@
-let mediaFilter = [];
+/* eslint-disable no-redeclare */
+//let mediaFilter = [];
+
+async function getData(){
+    try{
+        const res = await fetch('data/photographers.json');
+        const ok = await res.json();
+        return ok;     
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
 
 class Media {
     constructor(media) {
@@ -22,7 +34,7 @@ class Media {
             <div class="medias_card-down--likes">
                 <p class="likes-value">${this.likes}</p>             
                 <button class="like">
-                    <i role="button" class="far fa-heart" data-id="${this.media.id}" tabindex="0"></i> 
+                    <i class="far fa-heart" data-id="${this.media.id}" tabindex="0"></i> 
                 </button>  
             </div>
         </div>
@@ -68,10 +80,10 @@ class MediaFactory {
     }
 }
 
-MediasWrapper = document.querySelector('.medias');
+//const MediasWrapper = document.querySelector('.medias');
 
 function displayMedia(mediaFilter){
-    MediasWrapper = document.querySelector('.medias');
+    const MediasWrapper = document.querySelector('.medias');
     
     mediaFilter.forEach((media) => {   
         MediasWrapper.appendChild(media.createMediaWrapper());  
@@ -85,16 +97,16 @@ function createSortList() {
     const mediaWrapper =
         `
         <div class="sort_section">
-            <label>Trier par</label>
+            <label role="label" for="selected" name="Trier par">Trier par</label>
         </div>
 
-        <div class="sort_list">
-            <button class="selected">Populaire
+        <div class="sort_list" role="listbox">
+            <button class="selected" id="selected" aria-haspopup="listbox" aria-label="Populaire">Populaire
                 <i class="fas fa-chevron-down"></i>
             </button>
             <div class="options hidden">  
-                <button class="optDate">Date</button>
-                <button class="optTitle">Titre</button>
+                <button class="optDate" role="option" aria-label="Date">Date</button>
+                <button class="optTitle" role="option" aria-label="Titre">Titre</button>
             </div>
         </div>
         `;
@@ -116,24 +128,24 @@ function initLikes(mediaFilter){
 function addLikes() {
     let totalOfLikes = parseInt(document.querySelector('.likes_bloc-total').innerText);
     let likesArray = Array.from(document.querySelectorAll('.like')); 
-    likesArray.forEach((jaime) => { 
+    likesArray.forEach((like) => { 
         let liked = false;
-        jaime.addEventListener('click', () => {               
+        like.addEventListener('click', () => {               
             /*const id = e.target.getAttribute('data-id')
             let mediaFound = mediaFilter.find((media) => media.id == id )*/
 
             if (!liked) {
-                jaime.firstElementChild.classList.add("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) + 1;
+                like.firstElementChild.classList.add("fas")
+                like.previousElementSibling.innerText =
+                parseInt(like.previousElementSibling.innerText) + 1;
                 totalOfLikes += 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = true;               
             }
             else {
-                jaime.firstElementChild.classList.remove("fas")
-                jaime.previousElementSibling.innerText =
-                parseInt(jaime.previousElementSibling.innerText) - 1;
+                like.firstElementChild.classList.remove("fas")
+                like.previousElementSibling.innerText =
+                parseInt(like.previousElementSibling.innerText) - 1;
                 totalOfLikes -= 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = false;          
@@ -142,26 +154,17 @@ function addLikes() {
     });   
 }
 
-function likesKey(e){
-    if(e.key === "enter"){
-       addLikes()
-    }
-}
-
-    
-
-
-
-
 async function init() {
     const res = await getData();
     const mediasData = res.media;
-    mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
+    const photographerUrl = window.location.search;
+    const urlParams = new URLSearchParams(photographerUrl);
+    const photographerId = urlParams.get('id');
+    let mediaFilter = mediasData.filter((media) => media.photographerId == photographerId);
     mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
     displayMedia(mediaFilter)
     initLikes(mediaFilter)
-    createSortList()
-    
+    createSortList()   
 }
   
 init()
