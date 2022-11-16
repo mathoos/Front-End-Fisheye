@@ -119,7 +119,7 @@ function initLikes(mediaFilter){
     let totaldeLikes = 0  
     mediaFilter.forEach((media) => {          
         totaldeLikes = totaldeLikes += media.likes    
-        document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}<i class="fas fa-heart"></i></h1>`;
+        document.querySelector(".likes_bloc-total").innerHTML = `${totaldeLikes}<i class="fas fa-heart"></i>`;
     }); 
     
     addLikes()
@@ -136,16 +136,14 @@ function addLikes() {
 
             if (!liked) {
                 like.firstElementChild.classList.add("fas")
-                like.previousElementSibling.innerText =
-                parseInt(like.previousElementSibling.innerText) + 1;
+                like.previousElementSibling.innerText = parseInt(like.previousElementSibling.innerText) + 1;
                 totalOfLikes += 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = true;               
             }
             else {
                 like.firstElementChild.classList.remove("fas")
-                like.previousElementSibling.innerText =
-                parseInt(like.previousElementSibling.innerText) - 1;
+                like.previousElementSibling.innerText = parseInt(like.previousElementSibling.innerText) - 1;
                 totalOfLikes -= 1;
                 document.querySelector('.likes_bloc-total').innerHTML = `${totalOfLikes}<i class="fas fa-heart"></i></h1>`;
                 liked = false;          
