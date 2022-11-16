@@ -58,11 +58,20 @@ class Lightbox{
         let mediasData = await getMedias() 
         mediasData = Array.from(document.querySelectorAll(".displayMedia")); // tableau de toutes les photos et vidéos d'un photographe
         let images = mediasData.map((image) => image.getAttribute("src")); // tableau du chemin exact de chaque media 
+        console.log(images)
+        console.log(mediasData)
 
         mediasData.forEach((link) => {
             link.addEventListener("click", (e) => {
                 e.preventDefault()
                 new Lightbox(e.currentTarget.getAttribute("src"), images) // on récupère l'url du media
+            })
+
+            link.addEventListener("keyup", (e) => {
+                e.preventDefault()
+                if(e.key === 'Enter' || e.keyCode === 13){
+                    new Lightbox(e.currentTarget.getAttribute("src"), images) // on récupère l'url du media
+                }             
             })
         })
     }

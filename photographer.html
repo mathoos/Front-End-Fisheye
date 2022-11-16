@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,11 +25,26 @@
     <main aria-label="Contenu principal de la page photographe">
 
       <!-- HEADER PHOTOGRAPHE -->
-      <div class="photographer_header" aria-hidden="false">       
-      </div>
+      <div class="photographer_header" aria-hidden="false"></div>
         
       <!-- FILTRE -->
-      <div class="medias-sort" aria-hidden="false"></div>
+      <div class="medias-sort" aria-hidden="false">
+        <div class="sort">
+          <div class="sort_section">
+            <label role="label" for="selected" name="Trier par">Trier par</label>
+          </div>
+
+          <div class="sort_list" role="listbox">
+              <button class="selected" id="selected" aria-haspopup="true" aria-label="Populaire">Populaire
+                  <span class="fas fa-chevron-down"></span>
+              </button>
+              <div class="options hidden">  
+                  <button class="optDate" role="option" aria-label="Date">Date</button>
+                  <button class="optTitle" role="option" aria-label="Titre">Titre</button>
+              </div>
+          </div>
+        </div>
+      </div>
 
       <!-- MEDIAS -->
       <div class="medias" aria-hidden="false"></div>

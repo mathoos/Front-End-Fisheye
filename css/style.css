@@ -242,11 +242,14 @@ header h1 {
   overflow: hidden;
   cursor: pointer;
 }
-.medias_card-up img, .medias_card-up video {
+.medias_card-up .displayMedia {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+.medias_card-up .displayMedia:focus {
+  border: 3px solid #DB8876;
 }
 .medias_card-down {
   display: flex;
@@ -308,6 +311,7 @@ header h1 {
 }
 .likes_bloc-total i {
   font-size: 1.5rem;
+  color: #901C1C;
 }
 .likes_price {
   margin: 0;
@@ -384,6 +388,7 @@ header h1 {
   background-color: white;
 }
 .contact_modal-container form button {
+  cursor: pointer;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -392,6 +397,9 @@ header h1 {
   height: 70px;
   background-color: #901C1C;
   border-radius: 5px;
+}
+.contact_modal-container form button:hover {
+  background-color: #DB8876;
 }
 
 /* LIGHBOX */

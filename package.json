@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "sass": "sass --watch ./sass/style.scss:./css/style.css ./sass/main.scss:./css/main.css",
-    "eslint" : "eslint ."
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,8 @@
   "homepage": "https://github.com/mathoos/Front-End-Fisheye#readme",
   "devDependencies": {
     "eslint": "^8.26.0"
+  },
+  "dependencies": {
+    "sass": "^1.56.1"
   }
 }

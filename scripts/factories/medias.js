@@ -1,5 +1,5 @@
 /* eslint-disable no-redeclare */
-//let mediaFilter = [];
+
 
 async function getData(){
     try{
@@ -34,7 +34,7 @@ class Media {
             <div class="medias_card-down--likes">
                 <p class="likes-value">${this.likes}</p>             
                 <button class="like">
-                    <i class="far fa-heart" data-id="${this.media.id}" tabindex="0"></i> 
+                    <i class="far fa-heart" tabindex="0" aria-label="Aimer le media"></i> 
                 </button>  
             </div>
         </div>
@@ -51,7 +51,7 @@ class Image extends Media {
     }
 
     displayMedia() {
-        return `<img alt="${this.media.title}" class="displayMedia" id="image" src="assets/media/${this.media.image}">`;
+        return `<img alt="${this.media.title}" class="displayMedia" id="image" src="assets/media/${this.media.image}" tabindex="0">`;
     }
 }
 
@@ -61,7 +61,7 @@ class Video extends Media {
     }
 
     displayMedia() {
-        return `<video alt="${this.media.title}" class="displayMedia" id="image" autoplay src="assets/media/${this.media.video}" type="video/mp4"></video>`;
+        return `<video alt="${this.media.title}" class="displayMedia" id="image" autoplay src="assets/media/${this.media.video}" type="video/mp4" tabindex="0"></video>`;
     }
 }
 
@@ -80,8 +80,6 @@ class MediaFactory {
     }
 }
 
-//const MediasWrapper = document.querySelector('.medias');
-
 function displayMedia(mediaFilter){
     const MediasWrapper = document.querySelector('.medias');
     
@@ -90,30 +88,7 @@ function displayMedia(mediaFilter){
     });   
 }
 
-function createSortList() {
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('sort');
 
-    const mediaWrapper =
-        `
-        <div class="sort_section">
-            <label role="label" for="selected" name="Trier par">Trier par</label>
-        </div>
-
-        <div class="sort_list" role="listbox">
-            <button class="selected" id="selected" aria-haspopup="listbox" aria-label="Populaire">Populaire
-                <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="options hidden">  
-                <button class="optDate" role="option" aria-label="Date">Date</button>
-                <button class="optTitle" role="option" aria-label="Titre">Titre</button>
-            </div>
-        </div>
-        `;
-
-    wrapper.innerHTML = mediaWrapper;
-    document.querySelector(".medias-sort").appendChild(wrapper)      
-}
 
 function initLikes(mediaFilter){
     let totaldeLikes = 0  
@@ -131,9 +106,6 @@ function addLikes() {
     likesArray.forEach((like) => { 
         let liked = false;
         like.addEventListener('click', () => {               
-            /*const id = e.target.getAttribute('data-id')
-            let mediaFound = mediaFilter.find((media) => media.id == id )*/
-
             if (!liked) {
                 like.firstElementChild.classList.add("fas")
                 like.previousElementSibling.innerText = parseInt(like.previousElementSibling.innerText) + 1;
@@ -162,7 +134,6 @@ async function init() {
     mediaFilter = mediaFilter.map((media) => MediaFactory.create(media)); // Afficher image ou video
     displayMedia(mediaFilter)
     initLikes(mediaFilter)
-    createSortList()   
 }
   
 init()
