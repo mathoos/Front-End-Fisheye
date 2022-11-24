@@ -61,7 +61,7 @@ class Video extends Media {
     }
 
     displayMedia() {
-        return `<video alt="${this.media.title}" class="displayMedia" id="image" autoplay src="assets/media/${this.media.video}" type="video/mp4" tabindex="0"></video>`;
+        return `<video alt="${this.media.title}" class="displayMedia" id="image" controls autoplay src="assets/media/${this.media.video}" type="video/mp4" tabindex="0"></video>`;
     }
 }
 

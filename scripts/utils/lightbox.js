@@ -1,6 +1,3 @@
-/*import {getMedias} from "../pages/photographer.js"
-export*/ 
-
 async function getMedias() {
     try {
       const response = await fetch('data/photographers.json');
@@ -58,8 +55,6 @@ class Lightbox{
         let mediasData = await getMedias() 
         mediasData = Array.from(document.querySelectorAll(".displayMedia")); // tableau de toutes les photos et vidéos d'un photographe
         let images = mediasData.map((image) => image.getAttribute("src")); // tableau du chemin exact de chaque media 
-        console.log(images)
-        console.log(mediasData)
 
         mediasData.forEach((link) => {
             link.addEventListener("click", (e) => {
@@ -113,7 +108,7 @@ class Lightbox{
 
     next(e){
         e.preventDefault()
-        let i = this.images.findIndex(image => image === this.url) // on récupère l'index de l'image actuelle dans le tableau         
+        let i = this.images.findIndex(image => image === this.url) // on récupère l'index de l'image actuelle dans le tableau images      
         if(i === this.images.length - 1){ // pour revenir à la première image quand on a parcouru tout le tableau
             i = -1
         }     
@@ -122,7 +117,7 @@ class Lightbox{
 
     prev(e){
         e.preventDefault()
-        let i = this.images.findIndex(image => image === this.url) // on récupère l'index de l'image actuelle dans le tableau         
+        let i = this.images.findIndex(image => image === this.url)       
         if(i === 0){ 
             i = this.images.length
         }     
